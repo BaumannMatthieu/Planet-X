@@ -23,7 +23,7 @@ Game::Game() : running_(true) {
 	    std::cerr << "Erreur lors de la creation d'un renderer : " << SDL_GetError();
 	    exit(EXIT_FAILURE);
 	}
-	
+		
 	register_events();
 }
 
@@ -88,6 +88,5 @@ void Game::render() {
 		      Vector2<float>(30.0f, 70.f)});
 
 	poly.draw(renderer_);
-
 	SDL_RenderPresent(renderer_);
 }

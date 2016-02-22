@@ -23,15 +23,15 @@ class Vector2 {
 			return (x_ == vector.x_ && y_ == vector.y_);
 		}
 
-		inline const Vector2<T>& operator+(const Vector2<T>& vector) const {
+		inline const Vector2<T> operator+(const Vector2<T>& vector) const {
 			return Vector2<T>(x_ + vector.x_, y_ + vector.y_);
 		}
 		
-		inline const Vector2<T>& operator-(const Vector2<T>& vector) const {
+		inline const Vector2<T> operator-(const Vector2<T>& vector) const {
 			return Vector2<T>(x_ - vector.x_, y_ - vector.y_);
 		}
 
-		inline const Vector2<T>& operator*(const T& lambda) const {
+		inline const Vector2<T> operator*(const T& lambda) const {
 			return Vector2<T>(x_*lambda, y_*lambda);
 		}
 
@@ -39,7 +39,7 @@ class Vector2 {
 			return x_*vector.x_ + y_*vector.y_;
 		}
 		
-		inline const Vector2<T>& operator/(const T& lambda) const {
+		inline const Vector2<T> operator/(const T& lambda) const {
 			return Vector2<T>(x_/lambda, y_/lambda);
 		}
 

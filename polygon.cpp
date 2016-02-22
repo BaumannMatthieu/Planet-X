@@ -1,6 +1,9 @@
+#include <cmath>
 #include "polygon.h"
+#include "matrix22.h"
+#include "math.h"
 
-Polygon::Polygon(const std::vector<Point>& points) : points_(points) {
+Polygon::Polygon(const std::vector<Point>& points) : Primitive(points), pos_(Math::mean(points_)) {
 	
 }
 
@@ -8,11 +11,20 @@ Polygon::~Polygon() {
 
 }
 
-void Polygon::draw(SDL_Renderer* renderer) {
-	for(uint8_t i = 0; i < points_.size() - 1; i++) {
-		SDL_RenderDrawLine(renderer, points_[i].x_, points_[i].y_,
-					     points_[i+1].x_, points_[i+1].y_); 
+void Polygon::rotate(const float ang) {
+	float c = std::cos(ang);
+	float s = std::sin(ang);
+	Matrix22<float> mat_r(c, s,
+			     -s, c);
+	for(auto& point : points_) {
+		point = Math::rotate(point, pos_, mat_r);
 	}
-	SDL_RenderDrawLine(renderer, points_.back().x_, points_.back().y_,
-				     points_.front().x_, points_.front().y_); 
 }
+
+void Polygon::scale(const float factor) {
+	for(auto& point : points_) {
+		point = point*factor;
+	}
+	pos_ = Math::mean(points_);
+}
+
