@@ -12,6 +12,8 @@ class Polygon : public Primitive {
 
 		void rotate(const float ang);
 		void scale(const float factor);
+
+		bool is_polygon() const override;
 };
 
 #endif

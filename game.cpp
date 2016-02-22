@@ -1,5 +1,7 @@
 #include "game.h"
 #include "polygon.h"
+#include "quadtree.h"
+#include "rectangle.h"
 
 Game::Game() : running_(true) {
 	if(SDL_VideoInit(NULL) < 0) // Initialisation de la SDL
@@ -25,6 +27,17 @@ Game::Game() : running_(true) {
 	}
 		
 	register_events();
+
+/*	quadtree_ptr_ = std::make_shared<Quadtree<Rectangle>>([](const Rectangle& rect, const typename Quad<Rectangle>::Rect_t& rect_qt) -> bool {
+			if(rect.get_pos().x_ + rect.get_size().x_ < rect_qt.x || 
+		   rect.get_pos().y_ + rect.get_size().y_ < rect_qt.y ||
+			   rect_qt.x + rect_qt.w < rect.get_pos().x_ ||
+			   rect_qt.y + rect_qt.h < rect.get_pos().y_) {
+				return false;
+			}
+
+			return true;
+		});	*/
 }
 
 Game::~Game() {

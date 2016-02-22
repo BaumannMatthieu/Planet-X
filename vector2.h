@@ -6,6 +6,7 @@
 template<typename T>
 class Vector2 {
 	public:
+		Vector2<T>() { }
 		Vector2<T>(const T& x, const T& y) : x_(x), y_(y) {
 		
 		}

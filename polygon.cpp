@@ -3,7 +3,7 @@
 #include "matrix22.h"
 #include "math.h"
 
-Polygon::Polygon(const std::vector<Point>& points) : Primitive(points), pos_(Math::mean(points_)) {
+Polygon::Polygon(const std::vector<Point>& points) : Primitive(points, Math::mean(points)) {
 	
 }
 
@@ -28,3 +28,6 @@ void Polygon::scale(const float factor) {
 	pos_ = Math::mean(points_);
 }
 
+bool Polygon::is_polygon() const {
+	return true;
+}

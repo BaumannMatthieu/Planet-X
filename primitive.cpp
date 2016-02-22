@@ -5,7 +5,7 @@ Primitive::Primitive() {
 
 }
 
-Primitive::Primitive(const std::vector<Point>& points) : points_(points) {
+Primitive::Primitive(const std::vector<Point>& points, const Point& pos) : points_(points), pos_(pos) {
 
 }
 
@@ -24,4 +24,16 @@ void Primitive::translate(const Vector2<float>& vector) {
 	for(auto& point : points_) {
 		point = point + vector;
 	}
+}
+
+bool Primitive::is_rectangle() const {
+	return false;
+}
+
+bool Primitive::is_polygon() const {
+	return false;
+}
+
+const Point& Primitive::get_pos() const {
+	return pos_;
 }
