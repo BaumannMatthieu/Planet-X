@@ -12,11 +12,38 @@
 #define WIDTH_QUAD 1024.0f
 #define HEIGHT_QUAD 768.0f
 
-class Quadtree::Rect_t;
+class Quad;
+
+class Quadtree {
+	public:
+
+    typedef struct Rect_t {
+		float x, y, w, h;
+	} Rect_t;
+    
+    typedef std::function<bool(const EntityPtr, const Rect_t&)> RegisterElementFunc_t;
+
+	enum {TOP_LEFT,
+	      TOP_RIGHT,
+  	      BOTTOM_LEFT,
+     	  BOTTOM_RIGHT,
+	      NONE};
+	
+	public:
+		static uint8_t max_elements_;
+		static Rect_t global_rect_;
+
+		Quadtree(const RegisterElementFunc_t& func);
+		~Quadtree();
+		
+		void insert(const EntityPtr element_ptr, std::set<std::shared_ptr<Quad>>& quads);
+	private:
+		std::shared_ptr<Quad> head_;
+};
 
 class Quad {
 	public: 
-		Quad(const std::shared_ptr<Quad> parent, const uint8_t location);
+        Quad(const std::shared_ptr<Quad> parent, const uint8_t location);
 		~Quad();
 
 		void insert(const EntityPtr element_ptr, std::set<std::shared_ptr<Quad>>& quads);
@@ -37,31 +64,5 @@ class Quad {
 };
 
 typedef std::shared_ptr<Quad> QuadPtr;
-
-class Quadtree {
-	typedef std::function<bool(const Entity&, const Rect_t&)> RegisterElementFunc_t;
-	
-	typedef struct Rect_t {
-		float x, y, w, h;
-	} Rect_t;
-
-	enum {TOP_LEFT,
-	      TOP_RIGHT,
-  	      BOTTOM_LEFT,
-     	      BOTTOM_RIGHT,
-	      NONE};
-	
-	public:
-		static uint8_t max_elements_;
-		static Rect_t global_rect_;
-
-		Quadtree(const RegisterElementFunc_t& func);
-		~Quadtree();
-		
-		void insert(const EntityPtr element_ptr, std::set<QuadPtr>& quads);
-	private:
-		RegisterElementFunc_t func_;
-		QuadPtr head_;
-};
 
 #endif
