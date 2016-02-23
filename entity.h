@@ -7,10 +7,11 @@
 
 class Entity : public Renderable {
 	public:
-		Entity();
+		Entity(const Rectangle& box);
 		virtual ~Entity();
 
 		virtual void draw(SDL_Renderer* renderer);
+        const Rectangle& get_box() const;
 	private:
 		Rectangle box_;
 		//image...

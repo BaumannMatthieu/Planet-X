@@ -1,6 +1,6 @@
 CXX=g++
 CXXFLAGS=-Wall
-LDFLAGS= -lSDL2 -std=c++11
+LDFLAGS= -lSDL2 -g -std=c++11
 EXEC=space_game
 SRC= $(wildcard *.cpp)
 OBJ= $(SRC:.c=.o)

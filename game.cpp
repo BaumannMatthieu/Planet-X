@@ -1,10 +1,18 @@
+#include <ctime>
+
 #include "game.h"
 #include "polygon.h"
-#include "quadtree.h"
+#include "entity.h"
+
+#include "quadtree_handler.h"
 #include "rectangle.h"
 
+static EventHandler event_handler;
+
 Game::Game() : running_(true) {
-	if(SDL_VideoInit(NULL) < 0) // Initialisation de la SDL
+	std::srand(std::time(0));
+
+    if(SDL_VideoInit(NULL) < 0) // Initialisation de la SDL
 	{
 	    std::cerr << "Erreur d'initialisation de la SDL : " << SDL_GetError();
 	    exit(EXIT_FAILURE);
@@ -27,17 +35,15 @@ Game::Game() : running_(true) {
 	}
 		
 	register_events();
+    
+    QuadtreeHandler handler;   
+    
+    for(unsigned int i = 0; i < 10; i++) {
+        Rectangle box = Rectangle(Vector2<float>(std::rand()%WINDOW_WIDTH, std::rand()%WINDOW_HEIGHT), 50.0f, 50.0f);
+        EntityPtr entity_ptr = std::make_shared<Entity>(box);
 
-/*	quadtree_ptr_ = std::make_shared<Quadtree<Rectangle>>([](const Rectangle& rect, const typename Quad<Rectangle>::Rect_t& rect_qt) -> bool {
-			if(rect.get_pos().x_ + rect.get_size().x_ < rect_qt.x || 
-		   rect.get_pos().y_ + rect.get_size().y_ < rect_qt.y ||
-			   rect_qt.x + rect_qt.w < rect.get_pos().x_ ||
-			   rect_qt.y + rect_qt.h < rect.get_pos().y_) {
-				return false;
-			}
-
-			return true;
-		});	*/
+        handler.insert(entity_ptr);
+    }
 }
 
 Game::~Game() {

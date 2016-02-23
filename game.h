@@ -1,17 +1,14 @@
 #ifndef __GAME_H__
 #define __GAME_H__
 
-#include "event_handler.h"
-#include "event_registrable.h"
-#include "quadtree.h"
-#include "rectangle.h"
-
 #include <memory>
+#include "event_registrable.h"
+
+#include "event_handler.h"
+
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
-
-static EventHandler event_handler;
 
 class Game : public EventRegistrable {
 	public:
@@ -32,7 +29,6 @@ class Game : public EventRegistrable {
 		SDL_Event event_;
 
 		bool running_;
-		std::shared_ptr<Quadtree> quadtree_ptr_;
 };
 
 #endif
