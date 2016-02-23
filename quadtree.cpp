@@ -58,15 +58,13 @@ Quadtree::~Quadtree() {
 }
 
 void Quadtree::insert(const EntityPtr element_ptr, std::set<QuadtreePtr>& quads) {
-    if(element_in_quad_func == nullptr) 
-        std::cerr << "kjshdfksjdf" << std::endl;
-
 	if(element_in_quad_func(element_ptr, rect_)) {
 		num_elements_++;
 		if(children_.empty()) {
             if(elements_.size() < max_elements_) {
 				if(elements_.empty()) {
 					elements_[element_ptr] = std::set<EntityPtr>();
+                    quads.insert(shared_from_this());
 					return;
 				}
 
@@ -105,14 +103,22 @@ void Quadtree::update(const EntityPtr element_ptr, std::set<QuadtreePtr>& quads)
 		return;
 	}
 
-    QuadtreePtr thisQuadtree = std::shared_ptr<Quadtree>(this);
-
 	if(!element_in_quad_func(element_ptr, rect_)) { 
 		remove(element_ptr);
-		quads.erase(std::shared_ptr<Quadtree>(thisQuadtree));
+		quads.erase(shared_from_this());
+
+        if(parent_->num_elements_ < max_elements_) {
+            for(auto& neighbor_ptr : parent_->children_) {
+                for(auto& kv_inserted : neighbor_ptr->elements_) {
+                    parent_->elements_.insert(kv_inserted);
+                }
+                neighbor_ptr->elements_.clear();   
+                neighbor_ptr->children_.clear();   
+            }
+        }
 	} else {
 		for(auto& neighbor_ptr : parent_->children_) {
-			if(neighbor_ptr != thisQuadtree) {
+			if(neighbor_ptr != shared_from_this()) {
 				if(quads.find(neighbor_ptr) == quads.end()) {
 					if(element_in_quad_func(element_ptr, neighbor_ptr->rect_)) {
 						neighbor_ptr->insert(element_ptr, quads);

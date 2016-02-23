@@ -24,6 +24,7 @@ void Primitive::translate(const Vector2<float>& vector) {
 	for(auto& point : points_) {
 		point = point + vector;
 	}
+    pos_ = pos_ + vector;    
 }
 
 bool Primitive::is_rectangle() const {

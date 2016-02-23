@@ -9,7 +9,11 @@ Entity::~Entity() {
 }
 
 void Entity::draw(SDL_Renderer* renderer) {
+    box_.draw(renderer);
+}
 
+void Entity::move() {
+    box_.translate(Vector2<float>(0.01f, 0.01f));
 }
 
 const Rectangle& Entity::get_box() const {

@@ -4,13 +4,16 @@
 #include <memory>
 #include <SDL2/SDL.h>
 #include "rectangle.h"
+#include "movable.h"
 
-class Entity : public Renderable {
+class Entity : public Renderable, public Movable {
 	public:
 		Entity(const Rectangle& box);
 		virtual ~Entity();
 
 		virtual void draw(SDL_Renderer* renderer);
+		virtual void move();
+
         const Rectangle& get_box() const;
 	private:
 		Rectangle box_;

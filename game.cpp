@@ -1,16 +1,9 @@
-#include <ctime>
-
 #include "game.h"
-#include "polygon.h"
 #include "entity.h"
-
-#include "quadtree_handler.h"
-#include "rectangle.h"
 
 static EventHandler event_handler;
 
 Game::Game() : running_(true) {
-	std::srand(std::time(0));
 
     if(SDL_VideoInit(NULL) < 0) // Initialisation de la SDL
 	{
@@ -35,15 +28,6 @@ Game::Game() : running_(true) {
 	}
 		
 	register_events();
-    
-    QuadtreeHandler handler;   
-    
-    for(unsigned int i = 0; i < 10; i++) {
-        Rectangle box = Rectangle(Vector2<float>(std::rand()%WINDOW_WIDTH, std::rand()%WINDOW_HEIGHT), 50.0f, 50.0f);
-        EntityPtr entity_ptr = std::make_shared<Entity>(box);
-
-        handler.insert(entity_ptr);
-    }
 }
 
 Game::~Game() {
@@ -97,15 +81,11 @@ void Game::update() {
 	event_handler.handle(event_);
 
 	/** run world update, enemys, environments, particules ... */
+    scene_.update();
 }
 
 void Game::render() {
 	SDL_RenderClear(renderer_);
-	
-	Polygon poly({Vector2<float>(10.0f, 10.f),
-		      Vector2<float>(50.0f, 50.f),
-		      Vector2<float>(30.0f, 70.f)});
-
-	poly.draw(renderer_);
-	SDL_RenderPresent(renderer_);
+	scene_.draw(renderer_);
+    SDL_RenderPresent(renderer_);
 }

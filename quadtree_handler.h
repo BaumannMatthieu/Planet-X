@@ -4,14 +4,20 @@
 #include "entity.h"
 #include "quadtree.h"
 
-class QuadtreeHandler {
+#include "renderable.h"
+#include <SDL2/SDL.h>
+
+class QuadtreeHandler : public Renderable {
     public:
         QuadtreeHandler();
         ~QuadtreeHandler();
 
         void insert(const EntityPtr entity_ptr);
         void update(const EntityPtr entity_ptr);
- 
+        virtual void draw(SDL_Renderer* renderer) {
+            quadtree_->draw(renderer);
+        } 
+
     private:
         std::unordered_map<EntityPtr, std::set<QuadtreePtr>> quads_;    
         QuadtreePtr quadtree_;

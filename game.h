@@ -3,9 +3,8 @@
 
 #include <memory>
 #include "event_registrable.h"
-
 #include "event_handler.h"
-
+#include "context_scene.h"
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
@@ -25,6 +24,8 @@ class Game : public EventRegistrable {
 	private:
 		SDL_Window* window_;
 		SDL_Renderer* renderer_;
+
+        ContextScene scene_;
 
 		SDL_Event event_;
 
