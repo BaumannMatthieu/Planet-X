@@ -22,11 +22,10 @@ ContextScene::~ContextScene() {
 
 void ContextScene::update() {
     for(auto& entity : entitys_) {
-        //entity->move();
-        //quadtree_handler_.update();
+        entity->move();
+        quadtree_handler_.update(entity);
     }
 }
-
 void ContextScene::draw(SDL_Renderer* renderer) {
     for(auto& entity : entitys_) {
         entity->draw(renderer);

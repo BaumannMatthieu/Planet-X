@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <set>
 #include <functional>
+#include <iostream>
 
 #include <SDL2/SDL.h>
 #include "renderable.h"
@@ -34,7 +35,7 @@ class Quadtree : public std::enable_shared_from_this<Quadtree> {
 		~Quadtree();
 
        	void insert(const EntityPtr element_ptr, std::set<std::shared_ptr<Quadtree>>& quads);
-		void update(const EntityPtr element_ptr, std::set<std::shared_ptr<Quadtree>>& quads);
+	void update();
 	
         static void set_element_in_quad_func(const RegisterElementFunc_t& func);
 
@@ -50,13 +51,12 @@ class Quadtree : public std::enable_shared_from_this<Quadtree> {
             }
         }
 
-    private:    
 		void remove(const EntityPtr element_ptr);
+    private:    
 		void decrease_num_elements();
 	
 	private:
 		std::shared_ptr<Quadtree> parent_;
-		uint16_t num_elements_;
 		
 		Quadtree::Rect_t rect_;
 		std::vector<std::shared_ptr<Quadtree>> children_;

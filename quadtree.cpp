@@ -11,12 +11,10 @@ Quadtree::Rect_t Quadtree::global_rect_ = {0.f, 0.f, WIDTH_QUAD, HEIGHT_QUAD};
 static Quadtree::RegisterElementFunc_t element_in_quad_func = nullptr;
 
 void Quadtree::set_element_in_quad_func(const RegisterElementFunc_t& func) {
-    std::cout << "jkshdf" << std::endl;
     element_in_quad_func = func;
 }
 
 Quadtree::Quadtree(const QuadtreePtr parent, const uint8_t location) : parent_(parent) {
-	num_elements_ = 0;
 	if(parent_ == nullptr && location == NONE) {
 		rect_ = global_rect_;
 		return;
@@ -59,12 +57,11 @@ Quadtree::~Quadtree() {
 
 void Quadtree::insert(const EntityPtr element_ptr, std::set<QuadtreePtr>& quads) {
 	if(element_in_quad_func(element_ptr, rect_)) {
-		num_elements_++;
 		if(children_.empty()) {
-            if(elements_.size() < max_elements_) {
+            		if(elements_.size() < max_elements_) {
 				if(elements_.empty()) {
 					elements_[element_ptr] = std::set<EntityPtr>();
-                    quads.insert(shared_from_this());
+       			                quads.insert(shared_from_this());
 					return;
 				}
 
@@ -75,7 +72,7 @@ void Quadtree::insert(const EntityPtr element_ptr, std::set<QuadtreePtr>& quads)
 					elements_[element_inserted_ptr].insert(element_ptr);
 				}
 				
-                quads.insert(shared_from_this());
+                		quads.insert(shared_from_this());
 				return;
 			}
 
@@ -98,7 +95,46 @@ void Quadtree::insert(const EntityPtr element_ptr, std::set<QuadtreePtr>& quads)
 	}
 }
 
-void Quadtree::update(const EntityPtr element_ptr, std::set<QuadtreePtr>& quads) {
+void Quadtree::update() {
+	if(parent_ == nullptr)
+		return;
+
+	std::set<EntityPtr> entitys;
+	for(auto& child_ptr : parent_->children_) {
+		for(auto& child_elt : child_ptr->elements_) {
+			entitys.insert(child_elt.first);
+		}
+	}
+	if(entitys.size() < max_elements_) {
+		/*for(auto& child_ptr : parent_->children_) {
+			for(auto& child_elt : child_ptr->elements_) {
+				if(parent_->elements_.find(child_elt) == parent_->elements_.end())
+					parent_->elements_.insert(child_elt);
+			}
+			
+		}*/
+		for(auto& elt : entitys) {
+			parent_->elements_.insert(std::pair<EntityPtr, std::set<EntityPtr>>(elt, entitys));
+		}
+		parent_->children_.clear();
+	}
+
+	/*if(parent_ == nullptr)
+		return;
+
+	remove(element_ptr);
+	quads.erase(shared_from_this());
+	
+	if(parent_->num_elements_ < max_elements_) {
+	    for(auto& neighbor_ptr : parent_->children_) {
+		for(auto& neigh_elt : neighbor_ptr->elements_) {
+			parent_->elements_.insert(neigh_elt);
+		}
+		neighbor_ptr->elements_.clear();   
+		neighbor_ptr->children_.clear();
+	    }
+	}
+
 	if(parent_ == nullptr) {
 		return;
 	}
@@ -107,15 +143,15 @@ void Quadtree::update(const EntityPtr element_ptr, std::set<QuadtreePtr>& quads)
 		remove(element_ptr);
 		quads.erase(shared_from_this());
 
-        if(parent_->num_elements_ < max_elements_) {
-            for(auto& neighbor_ptr : parent_->children_) {
-                for(auto& kv_inserted : neighbor_ptr->elements_) {
-                    parent_->elements_.insert(kv_inserted);
-                }
-                neighbor_ptr->elements_.clear();   
-                neighbor_ptr->children_.clear();   
-            }
-        }
+		if(parent_->num_elements_ < max_elements_) {
+		    for(auto& neighbor_ptr : parent_->children_) {
+			for(auto& kv_inserted : neighbor_ptr->elements_) {
+			    parent_->elements_.insert(kv_inserted);
+			}
+			neighbor_ptr->elements_.clear();   
+			neighbor_ptr->children_.clear();
+		    }
+		}
 	} else {
 		for(auto& neighbor_ptr : parent_->children_) {
 			if(neighbor_ptr != shared_from_this()) {
@@ -127,21 +163,32 @@ void Quadtree::update(const EntityPtr element_ptr, std::set<QuadtreePtr>& quads)
 			}
 		}
 		parent_->update(element_ptr, quads);
-	}
+	}*/
 }
 
 void Quadtree::remove(const EntityPtr element_ptr) {
 	elements_.erase(element_ptr);
+
 	for(auto& kv_inserted : elements_) {
 		kv_inserted.second.erase(element_ptr);
 	}
+	
 
-	decrease_num_elements();
+	/*for(auto& neigh : parent_->children_) {
+		if(neigh->elements_.find(element_ptr) != neigh->elements_.end())
+			neigh->num_elements_--;
+	}
+
+	QuadtreePtr current = shared_from_this();
+	while(current != nullptr) {
+		current->num_elements_--;
+		current = current->parent_;
+	}*/
 }
 
 void Quadtree::decrease_num_elements() {
-	if(parent_ != nullptr) {
+/*	if(parent_ != nullptr) {
 		num_elements_--;
 		parent_->decrease_num_elements();
-	}
+	}*/
 }

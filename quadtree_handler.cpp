@@ -5,8 +5,6 @@
 
 QuadtreeHandler::QuadtreeHandler() {
     Quadtree::set_element_in_quad_func([](const EntityPtr entity, const Quadtree::Rect_t& rect_qt) -> bool {
-       
-        std::cout << "jffffkshdf" << std::endl;
         Rectangle rect = entity->get_box();
         if(rect.get_pos().x_ + rect.get_size().x_ < rect_qt.x || 
            rect.get_pos().y_ + rect.get_size().y_ < rect_qt.y ||
@@ -30,7 +28,15 @@ void QuadtreeHandler::insert(const EntityPtr entity_ptr) {
 }
 
 void QuadtreeHandler::update(const EntityPtr entity_ptr) {
-    quadtree_->update(entity_ptr, quads_[entity_ptr]);
+	for(auto& quad : quads_[entity_ptr]) {
+		quad->remove(entity_ptr);
+	}
+	for(auto& quad : quads_[entity_ptr]) {
+		quad->update();
+	}
+
+	quads_[entity_ptr].clear();
+    	quadtree_->insert(entity_ptr, quads_[entity_ptr]);
 }
  
 
