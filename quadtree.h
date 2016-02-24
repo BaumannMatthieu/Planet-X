@@ -40,9 +40,8 @@ class Quadtree : public std::enable_shared_from_this<Quadtree> {
 
         static void set_element_in_quad_func(const RegisterElementFunc_t& func);
 
-	    static int max_elements_;
+	    static uint8_t max_elements_;
 		static Rect_t global_rect_;
-
 
         virtual void draw(SDL_Renderer* renderer) const {
             Rectangle rect(Vector2<float>(rect_.x, rect_.y), rect_.w, rect_.h);
@@ -60,7 +59,7 @@ class Quadtree : public std::enable_shared_from_this<Quadtree> {
         bool is_parent(const EntityPtr element_ptr);
     private:
 		std::shared_ptr<Quadtree> parent_;
-	    int num_elements_;	
+	    uint16_t num_elements_;	
 		Quadtree::Rect_t rect_;
 		std::vector<std::shared_ptr<Quadtree>> children_;
 		

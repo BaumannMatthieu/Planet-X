@@ -35,6 +35,7 @@ void QuadtreeHandler::update(const EntityPtr entity_ptr) {
 	}
     	
     quadtree_->update(quads_);
+    
     quadtree_->insert(entity_ptr, quads_);
 }
  

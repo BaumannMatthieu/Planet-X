@@ -4,7 +4,7 @@
 #include <iostream>
 #include "quadtree.h"
 
-int Quadtree::max_elements_ = 4;
+uint8_t Quadtree::max_elements_ = 4;
 
 Quadtree::Rect_t Quadtree::global_rect_ = {0.f, 0.f, 1024.f, 768.f};
 
