@@ -24,19 +24,18 @@ QuadtreeHandler::~QuadtreeHandler() {
 }
 
 void QuadtreeHandler::insert(const EntityPtr entity_ptr) {
-    quadtree_->insert(entity_ptr, quads_[entity_ptr]);
+    quadtree_->insert(entity_ptr, quads_);
 }
 
 void QuadtreeHandler::update(const EntityPtr entity_ptr) {
-	for(auto& quad : quads_[entity_ptr]) {
-		quad->remove(entity_ptr);
-	}
-	for(auto& quad : quads_[entity_ptr]) {
-		quad->update();
-	}
+	quadtree_->decrease_num_elements(entity_ptr);
 
-	quads_[entity_ptr].clear();
-    	quadtree_->insert(entity_ptr, quads_[entity_ptr]);
+    for(auto& quad : quads_[entity_ptr]) {
+		quad->remove(entity_ptr, quads_);
+	}
+    	
+    quadtree_->update(quads_);
+    quadtree_->insert(entity_ptr, quads_);
 }
  
 

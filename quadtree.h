@@ -34,12 +34,13 @@ class Quadtree : public std::enable_shared_from_this<Quadtree> {
         Quadtree(const std::shared_ptr<Quadtree> parent=nullptr, const uint8_t location=NONE);
 		~Quadtree();
 
-       	void insert(const EntityPtr element_ptr, std::set<std::shared_ptr<Quadtree>>& quads);
-	void update();
+        void insert(const EntityPtr element_ptr, std::unordered_map<EntityPtr, std::set<std::shared_ptr<Quadtree>>>& quads_map);
 	
+        void update(std::unordered_map<EntityPtr, std::set<std::shared_ptr<Quadtree>>>& quads_map);
+
         static void set_element_in_quad_func(const RegisterElementFunc_t& func);
 
-	    static uint8_t max_elements_;
+	    static int max_elements_;
 		static Rect_t global_rect_;
 
 
@@ -51,13 +52,15 @@ class Quadtree : public std::enable_shared_from_this<Quadtree> {
             }
         }
 
-		void remove(const EntityPtr element_ptr);
-    private:    
-		void decrease_num_elements();
-	
-	private:
-		std::shared_ptr<Quadtree> parent_;
+		void remove(const EntityPtr element_ptr, std::unordered_map<EntityPtr, std::set<std::shared_ptr<Quadtree>>>& quads_map);
 		
+        void decrease_num_elements(const EntityPtr element_ptr);
+    private:    
+        void get_all_children_elt(std::set<EntityPtr>& elts);
+        bool is_parent(const EntityPtr element_ptr);
+    private:
+		std::shared_ptr<Quadtree> parent_;
+	    int num_elements_;	
 		Quadtree::Rect_t rect_;
 		std::vector<std::shared_ptr<Quadtree>> children_;
 		
