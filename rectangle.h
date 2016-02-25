@@ -13,9 +13,9 @@ class Rectangle : public Primitive {
 		
 		bool is_rectangle() const override;
 
-		const Vector2<float> get_size() const;
-
-	private:
+        static bool intersection(const Rectangle& r1, const Rectangle& r2);
+	    const Vector2<float> get_size() const;
+    private:
 		float w_, h_;
 };
 

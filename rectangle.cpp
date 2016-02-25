@@ -15,5 +15,16 @@ bool Rectangle::is_rectangle() const {
 }
 
 const Vector2<float> Rectangle::get_size() const {
-	return Vector2<float>(w_, h_);
+    return Vector2<float>(w_, h_);
+}
+
+bool Rectangle::intersection(const Rectangle& r1, const Rectangle& r2) {
+       if(r1.pos_.x_ + r1.w_ < r2.pos_.x_ || 
+          r1.pos_.y_ + r1.h_ < r2.pos_.y_ || 
+          r2.pos_.x_ + r2.w_ < r1.pos_.x_ ||
+          r2.pos_.y_ + r2.h_ < r1.pos_.y_) {
+            return false;
+        }
+
+        return true;
 }

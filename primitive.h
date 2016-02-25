@@ -19,11 +19,12 @@ class Primitive : public Renderable {
 
 		virtual bool is_rectangle() const;
 		virtual bool is_polygon() const;
-
-		const Point& get_pos() const;
+    
+        const Point& get_pos() const;
 	protected:
 		std::vector<Point> points_;
 		Point pos_;
+
 };
 
 #endif

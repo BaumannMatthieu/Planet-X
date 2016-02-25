@@ -1,9 +1,9 @@
 CXX=g++
-CXXFLAGS=-Wall
-LDFLAGS= -lSDL2 -g -std=c++11
+CXXFLAGS=-Wall -std=c++11
+LDFLAGS= -lSDL2
 EXEC=space_game
 SRC= $(wildcard *.cpp)
-OBJ= $(SRC:.c=.o)
+OBJ= $(SRC:.cpp=.o)
 
 all: $(EXEC)
 
@@ -12,8 +12,6 @@ $(EXEC): $(OBJ)
 
 %.o: %.cpp
 	$(CXX) -o $@ -c $< $(CXXFLAGS)
-
-.PHONY: clean mrproper
 
 clean:
 	rm -rf *.o

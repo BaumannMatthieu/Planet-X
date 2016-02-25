@@ -34,7 +34,6 @@ bool Primitive::is_rectangle() const {
 bool Primitive::is_polygon() const {
 	return false;
 }
-
 const Point& Primitive::get_pos() const {
-	return pos_;
+    return pos_;
 }
