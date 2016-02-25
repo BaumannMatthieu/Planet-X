@@ -33,7 +33,8 @@ void QuadtreeHandler::update(const EntityPtr entity_ptr) {
     for(auto& quad : quads_[entity_ptr]) {
 		quad->remove(entity_ptr, quads_);
 	}
-    	
+    quads_[entity_ptr].clear();
+ 	
     quadtree_->update(quads_);
     
     quadtree_->insert(entity_ptr, quads_);

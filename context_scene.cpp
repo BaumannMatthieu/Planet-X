@@ -56,6 +56,7 @@ void ContextScene::draw(SDL_Renderer* renderer) {
     }
 
     // a supprimer
+    //quadtree_handler_.draw(renderer);
     quadtree_handler_.draw(renderer);
 }
 

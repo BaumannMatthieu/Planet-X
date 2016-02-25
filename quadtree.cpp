@@ -101,6 +101,9 @@ void Quadtree::insert(const EntityPtr element_ptr, std::unordered_map<EntityPtr,
 }
 
 void Quadtree::update(std::unordered_map<EntityPtr, std::set<QuadtreePtr>>& quads_map) {
+    for(auto& child_ptr : children_) {
+	    child_ptr->update(quads_map);
+	}
 
     if(num_elements_ <= max_elements_ && !children_.empty()) {
         std::set<EntityPtr> elts_to_insert; 
@@ -114,10 +117,6 @@ void Quadtree::update(std::unordered_map<EntityPtr, std::set<QuadtreePtr>>& quad
             insert(elt_to_insert, quads_map);
         } 
     }
-  
-    for(auto& child_ptr : children_) {
-	    child_ptr->update(quads_map);
-	}
 }
 
 void Quadtree::get_all_children_elt(std::set<EntityPtr>& elts) {
@@ -155,8 +154,6 @@ void Quadtree::remove(const EntityPtr element_ptr, std::unordered_map<EntityPtr,
 	for(auto& kv_inserted : elements_) {
 		kv_inserted.second.erase(element_ptr);
 	}
-
-    quads_map[element_ptr].erase(shared_from_this());
 }
 
 
