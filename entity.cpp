@@ -12,10 +12,6 @@ void Entity::draw(SDL_Renderer* renderer) {
     box_.draw(renderer);
 }
 
-void Entity::move() {
-    box_.translate(Vector2<float>(1.0f, 1.0f));
-}
-
 const Rectangle& Entity::get_box() const {
     return box_;
 }
