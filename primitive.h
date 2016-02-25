@@ -21,6 +21,7 @@ class Primitive : public Renderable {
 		virtual bool is_polygon() const;
     
         const Point& get_pos() const;
+        const std::vector<Point>& get_points() const;
 	protected:
 		std::vector<Point> points_;
 		Point pos_;

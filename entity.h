@@ -16,6 +16,7 @@ class Entity : public Renderable {
        	const Rectangle& get_box() const;
 	protected:
 		Rectangle box_;
+        Point center_mass_;
 		//image...
 };
 

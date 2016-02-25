@@ -36,6 +36,10 @@ class Vector2 {
 			return Vector2<T>(x_*lambda, y_*lambda);
 		}
 
+        inline const Vector2<T> operator-() const {
+            return Vector2<T>(-x_, -y_);
+        }
+
 		inline const T& operator*(const Vector2<T>& vector) const {
 			return x_*vector.x_ + y_*vector.y_;
 		}
@@ -44,7 +48,7 @@ class Vector2 {
 			return Vector2<T>(x_/lambda, y_/lambda);
 		}
 
-        const T& get_norme() const {
+        const T get_norme() const {
 			return std::sqrt(x_*x_ + y_*y_);
         }
 
@@ -54,7 +58,7 @@ class Vector2 {
 			*this = *this/norme;
 		}
 
-        static const T& distance(const Vector2<T>& u, const Vector2<T>& v) {
+        static const T distance(const Vector2<T>& u, const Vector2<T>& v) {
             Vector2<T> vect(u.x_ - v.x_, u.y_ - v.y_);
             return vect.get_norme();
         }

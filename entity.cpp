@@ -1,6 +1,7 @@
 #include "entity.h"
+#include "math.h"
 
-Entity::Entity(const Rectangle& box) : box_(box) {
+Entity::Entity(const Rectangle& box) : box_(box), center_mass_(Math::mean(box.get_points())) {
 
 }
 
