@@ -5,8 +5,9 @@
 #include "entity.h"
 #include "rectangle.h"
 #include "movable.h"
+#include "scriptable.h"
 
-class Ship : public Entity, public Movable {
+class Ship : public Entity, public Movable, public Scriptable {
 	public:
 		Ship(const Rectangle& box);
 		virtual ~Ship();
@@ -14,7 +15,6 @@ class Ship : public Entity, public Movable {
 		virtual void move();
 		virtual void update();
 	protected:	
-		virtual const Vector2<float> compute_force() const;
         	const Vector2<float> compute_seek_force() const;
         	const Vector2<float> compute_flee_force() const;
         	const Vector2<float> compute_circular_displacement_force() const;
