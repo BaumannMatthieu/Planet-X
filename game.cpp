@@ -1,9 +1,11 @@
 #include "game.h"
 #include "entity.h"
 
+#define FRAME_PER_SECOND 60
+
 static EventHandler event_handler;
 
-Game::Game() : running_(true) {
+Game::Game() : running_(true), time_per_frame_(1000/FRAME_PER_SECOND) {
 
     if(SDL_VideoInit(NULL) < 0) // Initialisation de la SDL
 	{
@@ -28,6 +30,7 @@ Game::Game() : running_(true) {
 	}
 		
 	register_events();
+	past_time_ = SDL_GetTicks();
 }
 
 Game::~Game() {
@@ -42,6 +45,12 @@ void Game::run() {
 		get_events();
 		update();
 		render();
+		
+		Uint32 time_current_frame = SDL_GetTicks() - past_time_;
+		if(time_current_frame < time_per_frame_) {
+			SDL_Delay(time_per_frame_ - time_current_frame);
+		}
+		past_time_ = SDL_GetTicks();
 	}
 }
 
@@ -81,11 +90,11 @@ void Game::update() {
 	event_handler.handle(event_);
 
 	/** run world update, enemys, environments, particules ... */
-    scene_.update();
+	scene_.update();
 }
 
 void Game::render() {
 	SDL_RenderClear(renderer_);
 	scene_.draw(renderer_);
-    SDL_RenderPresent(renderer_);
+   	SDL_RenderPresent(renderer_);
 }

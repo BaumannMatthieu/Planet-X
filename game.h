@@ -25,11 +25,13 @@ class Game : public EventRegistrable {
 		SDL_Window* window_;
 		SDL_Renderer* renderer_;
 
-        ContextScene scene_;
+        	ContextScene scene_;
 
 		SDL_Event event_;
-
+		
 		bool running_;
+		Uint32 time_per_frame_;
+		Uint32 past_time_;
 };
 
 #endif
