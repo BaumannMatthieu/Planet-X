@@ -1,9 +1,12 @@
 #include <iostream>
 #include "ship.h"
+#include "math.h"
 
 Ship::Ship(const Rectangle& box) : Entity(box), life_(100),
 rad_focus_(500), rad_attack_(300), rad_near_(100) {
-	mass_ = 1000;
+	mass_ = 5;
+    max_velocity_ = 10.0f;
+    max_force_ = 15; 
     //velocity_ = Vector2<float>((static_cast<float>(std::rand())/RAND_MAX)*2.f - 1.f, (static_cast<float>(std::rand())/RAND_MAX)*2.f - 1.f); 
 	velocity_ = Vector2<float>(-0.1f, -0.1f);
 	
@@ -106,12 +109,28 @@ const Vector2<float> Ship::compute_seek_force() const {
 	Point seek_pos(512.f, 384.f);   
 	Vector2<float> desired_velocity = seek_pos - center_mass_;
 	desired_velocity.normalize();
-	desired_velocity = desired_velocity*velocity_.get_norme();
+	desired_velocity = desired_velocity*max_velocity_;
 	Vector2<float> seek_force = desired_velocity - velocity_;
-	//seek_force.normalize();
-    	std::cout << "seek force : " << seek_force.get_norme() << std::endl; 	
+    std::cout << "seek force : " << seek_force.get_norme() << std::endl; 	
 	return seek_force;	
 }
+
+const Vector2<float> Ship::compute_arrive_force() const {
+	Point seek_pos(512.f, 384.f);
+	Vector2<float> desired_velocity = seek_pos - center_mass_;
+	float distance = desired_velocity.get_norme();
+    desired_velocity.normalize();
+    float radius_stop = 100.0f;
+    if(distance >= radius_stop) {
+        desired_velocity = desired_velocity*max_velocity_;
+    } else {
+        desired_velocity = desired_velocity*max_velocity_*(distance/radius_stop);
+    }
+        
+	return desired_velocity - velocity_;	
+}
+
+
 
 const Vector2<float> Ship::compute_flee_force() const {
 	return -compute_seek_force();	
@@ -129,11 +148,13 @@ const Vector2<float> Ship::compute_circular_displacement_force() const {
 }
 
 void Ship::update() {
-	execute();
+	//execute();
+    force_ = compute_arrive_force();
+    Math::truncate(force_, max_force_);
 	
 	acceleration_ = force_/mass_;
-	velocity_ = velocity_ + acceleration_;
-	std::cout << "velocity : " << velocity_.get_norme() << std::endl;
+    velocity_ = velocity_ + acceleration_;
+    Math::truncate(velocity_, max_velocity_);
 
 	move();
 }

@@ -20,6 +20,14 @@ namespace Math {
 				     const Matrix22<float>& matrix) {
 		return matrix*(vector - center) + center;
 	}
+
+    inline void truncate(Vector2<float>& vector, float max_norme) {
+        float norme_vector = vector.get_norme();
+        if(norme_vector < max_norme) {
+            return;
+        }
+        vector = vector*(max_norme/norme_vector);
+    }
 };
 
 #endif

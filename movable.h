@@ -9,6 +9,8 @@ class Movable {
 		Vector2<float> force_;
 		Vector2<float> acceleration_;
 		Vector2<float> velocity_;
+        float max_velocity_;
+        float max_force_;
 		
 		float mass_;
 };

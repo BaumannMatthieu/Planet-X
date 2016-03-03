@@ -16,6 +16,7 @@ class Ship : public Entity, public Movable, public Scriptable {
 		virtual void update();
 	protected:	
         	const Vector2<float> compute_seek_force() const;
+        	const Vector2<float> compute_arrive_force() const;
         	const Vector2<float> compute_flee_force() const;
         	const Vector2<float> compute_circular_displacement_force() const;
 	private:
