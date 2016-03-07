@@ -5,7 +5,7 @@
 #include <memory>
 #include "vector2.h"
 #include "primitive.h"
-#include "movable.h"
+class Ship;
 
 class Path {
     public:
@@ -15,14 +15,14 @@ class Path {
 
         void add_point(const Point& point);
 
-        const Vector2<float> execute(std::shared_ptr<Movable> movable);
+        const Vector2<float> execute(std::shared_ptr<Ship> ship);
     private:
     
+        std::vector<Point> points_;
+        float radius_;
+        bool repeat_;
         uint8_t current_destination_;
 
-        float radius_;
-        std::vector<Point> points_;
-        bool repeat_;
 };
 
 #endif

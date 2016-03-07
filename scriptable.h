@@ -10,12 +10,10 @@ class State : public std::enable_shared_from_this<State> {
 	public:
 		enum {
 			WANDERING, 
-			SEEKING, 
-			FLEEING, 
+			ATTACK_DISPLACEMENT,
 			ATTACKING, 
 			FEARING,
-			SHIELDING,
-			CIRCULAR_MOVING 
+			SHIELDING
 		};
 
 	public:

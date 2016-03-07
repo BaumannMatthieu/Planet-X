@@ -1,6 +1,6 @@
 #include "path.h"
+#include "ship.h"
 #include "movable.h"
-
 
 Path::Path(const float radius, const bool repeat) : radius_(radius), repeat_(repeat) {
 
@@ -29,7 +29,7 @@ const Vector2<float> Path::execute(std::shared_ptr<Ship> ship) {
         return ship->compute_arrive_force(pos, points_[current_destination_]);
     }
 
-    Vector2<float> distance_vector = current_destination_ - pos;
+    Vector2<float> distance_vector = points_[current_destination_] - pos;
     float distance = distance_vector.get_norme();
     if(distance <= radius_) {
         if(current_destination_ == points_.size() - 1) {

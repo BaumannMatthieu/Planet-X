@@ -2,7 +2,7 @@
 #include "movable.h"
 
 
- inline const Vector2<float> Movable::compute_seek_force(const Point& source, const Point& destination) const {
+const Vector2<float> Movable::compute_seek_force(const Point& source, const Point& destination) const {
     Vector2<float> desired_velocity = destination - source;
 	desired_velocity.normalize();
 	desired_velocity = desired_velocity*max_velocity_;
@@ -12,7 +12,7 @@
 	return seek_force;
 }
     
-inline const Vector2<float> Movable::compute_arrive_force(const Point& source, const Point& destination) const {
+const Vector2<float> Movable::compute_arrive_force(const Point& source, const Point& destination) const {
 	Vector2<float> desired_velocity = destination - source;
 	float distance = desired_velocity.get_norme();
     desired_velocity.normalize();
@@ -27,14 +27,13 @@ inline const Vector2<float> Movable::compute_arrive_force(const Point& source, c
 	return desired_velocity - velocity_;	
 }
 
-inline const Vector2<float> Movable::compute_flee_force(const Point& source, const Point& destination) const {
+const Vector2<float> Movable::compute_flee_force(const Point& source, const Point& destination) const {
 	return -compute_seek_force(source, destination);	
 }
 
-inline const Vector2<float> Movable::compute_circular_displacement_force(const Point& source, const Point& destination) const {
+const Vector2<float> Movable::compute_circular_displacement_force(const Point& source, const Point& destination) const {
 	Vector2<float> radial_vector = source - destination;
 
    	return Vector2<float>(-radial_vector.y_, radial_vector.x_);
 }
-
 
