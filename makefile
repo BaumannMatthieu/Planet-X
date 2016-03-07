@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-Wall -std=c++11
+CXXFLAGS=-Wall
 LDFLAGS= -lSDL2
 EXEC=space_game
 SRC= $(wildcard *.cpp)

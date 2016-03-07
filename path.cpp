@@ -6,7 +6,8 @@ Path::Path(const float radius, const bool repeat) : radius_(radius), repeat_(rep
 
 }
 
-Path::Path(const std::vector<Point>& points, const float radius, const bool repeat) : points_(points), radius_(radius), repeat_(repeat) {
+Path::Path(const std::vector<Point>& points, const float radius, const bool repeat)
+ : points_(points), radius_(radius), repeat_(repeat) {
     current_destination_ = 0;
 }
 
@@ -22,21 +23,24 @@ void Path::add_point(const Point& point) {
     points_.push_back(point);
 }
 
-const Vector2<float> Path::execute(std::shared_ptr<Movable> movable) {
-    Point pos = movable->get_position();
-    if(!repeat_ && current_destination_ >= points_.size()) {
-        return movable->compute_arrive_force(pos, points_[current_destination_]);
+const Vector2<float> Path::execute(std::shared_ptr<Ship> ship) {
+    Point pos = ship->get_position();
+    if(!repeat_ && current_destination_ == points_.size() - 1) {
+        return ship->compute_arrive_force(pos, points_[current_destination_]);
     }
 
     Vector2<float> distance_vector = current_destination_ - pos;
     float distance = distance_vector.get_norme();
     if(distance <= radius_) {
-        current_destination_++;
-        if(repeat_ && current_destination_ >= points_.size()) {
-            current_destination_ = 0;
+        if(current_destination_ == points_.size() - 1) {
+            if(repeat_) {
+                current_destination_ = 0;
+            }
+        } else {
+            current_destination_++;
         }
     }
-
-    return movable->compute_seek_force(pos, points_[current_destination_]);
+    
+    return ship->compute_seek_force(pos, points_[current_destination_]);
 }
 
