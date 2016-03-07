@@ -105,48 +105,6 @@ Ship::~Ship() {
     
 }
 
-const Vector2<float> Ship::compute_seek_force() const {
-	Point seek_pos(512.f, 384.f);   
-	Vector2<float> desired_velocity = seek_pos - center_mass_;
-	desired_velocity.normalize();
-	desired_velocity = desired_velocity*max_velocity_;
-	Vector2<float> seek_force = desired_velocity - velocity_;
-    std::cout << "seek force : " << seek_force.get_norme() << std::endl; 	
-	return seek_force;	
-}
-
-const Vector2<float> Ship::compute_arrive_force() const {
-	Point seek_pos(512.f, 384.f);
-	Vector2<float> desired_velocity = seek_pos - center_mass_;
-	float distance = desired_velocity.get_norme();
-    desired_velocity.normalize();
-    float radius_stop = 100.0f;
-    if(distance >= radius_stop) {
-        desired_velocity = desired_velocity*max_velocity_;
-    } else {
-        desired_velocity = desired_velocity*max_velocity_*(distance/radius_stop);
-    }
-        
-	return desired_velocity - velocity_;	
-}
-
-
-
-const Vector2<float> Ship::compute_flee_force() const {
-	return -compute_seek_force();	
-}
-
-const Vector2<float> Ship::compute_circular_displacement_force() const {
-	Point focus_pos(512.f, 384.f);   
-	Vector2<float> radial_vector = center_mass_ - focus_pos;
-	//radial_vector.normalize();
-	radial_vector = radial_vector;
-
-	std::cout << radial_vector.x_ << " " << radial_vector.y_ << std::endl;
-
-   	return Vector2<float>(-radial_vector.y_, radial_vector.x_);
-}
-
 void Ship::update() {
 	//execute();
     force_ = compute_arrive_force();

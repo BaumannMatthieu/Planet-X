@@ -14,9 +14,10 @@ class Entity : public Renderable {
 		virtual void update() = 0;
 
      	const Rectangle& get_box() const;
+        const Point& get_position() const;  
 	protected:
 		Rectangle box_;
-        	Point center_mass_;
+      	Point center_mass_;
 		//image...
 };
 

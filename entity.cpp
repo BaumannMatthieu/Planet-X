@@ -16,3 +16,7 @@ void Entity::draw(SDL_Renderer* renderer) {
 const Rectangle& Entity::get_box() const {
     return box_;
 }
+
+const Point& Entity::get_position() const {
+    return center_mass_;
+}
