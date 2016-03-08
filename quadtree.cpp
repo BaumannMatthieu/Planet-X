@@ -9,12 +9,6 @@ uint8_t Quadtree::max_elements_ = 4;
 
 Rectangle Quadtree::global_rect_ = {Vector2<float>(0.f, 0.f), 1024.f, 768.f};
 
-static Quadtree::RegisterElementFunc_t element_in_quad_func = nullptr;
-
-void Quadtree::set_element_in_quad_func(const RegisterElementFunc_t& func) {
-    element_in_quad_func = func;
-}
-
 Quadtree::Quadtree(const QuadtreePtr parent, const uint8_t location) : parent_(parent), num_elements_(0) {
 	if(parent_ == nullptr && location == NONE) {
 		rect_ = global_rect_;
@@ -56,19 +50,19 @@ Quadtree::~Quadtree() {
 
 }
 
-void Quadtree::insert(const EntityPtr element_ptr, std::unordered_map<EntityPtr, std::set<QuadtreePtr>>& quads_map) {
-	if(element_in_quad_func(element_ptr, rect_)) {
+void Quadtree::insert(const CollisablePtr element_ptr, std::unordered_map<CollisablePtr, std::set<QuadtreePtr>>& quads_map) {
+	if(element_ptr->compute(rect_)) {
         num_elements_++;
 		if(children_.empty()) {
             if(elements_.size() < max_elements_) {
 				if(elements_.empty()) {
-					elements_[element_ptr] = std::set<EntityPtr>();
+					elements_[element_ptr] = std::set<CollisablePtr>();
 	                quads_map[element_ptr].insert(shared_from_this());
 					return;
 				}
 
 				for(auto& kv_inserted : elements_) {
-					const EntityPtr element_inserted_ptr(kv_inserted.first);
+					const CollisablePtr element_inserted_ptr(kv_inserted.first);
 
 					elements_[element_ptr].insert(element_inserted_ptr);
 					elements_[element_inserted_ptr].insert(element_ptr);
@@ -85,7 +79,7 @@ void Quadtree::insert(const EntityPtr element_ptr, std::unordered_map<EntityPtr,
 	        
             for(auto& child_ptr : children_) {
 			    for(auto& kv_inserted : elements_) {
-				    const EntityPtr element_already_ptr(kv_inserted.first);
+				    const CollisablePtr element_already_ptr(kv_inserted.first);
                     quads_map[element_already_ptr].erase(shared_from_this());
 				    child_ptr->insert(element_already_ptr, quads_map);	
                 }
@@ -100,13 +94,13 @@ void Quadtree::insert(const EntityPtr element_ptr, std::unordered_map<EntityPtr,
 	}
 }
 
-void Quadtree::update(std::unordered_map<EntityPtr, std::set<QuadtreePtr>>& quads_map) {
+void Quadtree::update(std::unordered_map<CollisablePtr, std::set<QuadtreePtr>>& quads_map) {
 	if(parent_ == nullptr) {
 		return;
 	}
 
  	if(parent_->num_elements_ <= max_elements_ && !parent_->children_.empty()) {
-		std::set<EntityPtr> elts_to_insert; 
+		std::set<CollisablePtr> elts_to_insert; 
 		parent_->get_all_children_elt(elts_to_insert);
 		    
 		parent_->children_.clear();
@@ -121,7 +115,7 @@ void Quadtree::update(std::unordered_map<EntityPtr, std::set<QuadtreePtr>>& quad
     }
 }
 
-void Quadtree::get_all_children_elt(std::set<EntityPtr>& elts) {
+void Quadtree::get_all_children_elt(std::set<CollisablePtr>& elts) {
     for(auto& elt : elements_) {
         elts.insert(elt.first);
     }
@@ -131,7 +125,7 @@ void Quadtree::get_all_children_elt(std::set<EntityPtr>& elts) {
     }
 }
 
-void Quadtree::decrease_num_elements(const EntityPtr element_ptr) {
+void Quadtree::decrease_num_elements(const CollisablePtr element_ptr) {
     if(is_parent(element_ptr)) {
 	    num_elements_--;
         for(auto& child : children_) {
@@ -140,7 +134,7 @@ void Quadtree::decrease_num_elements(const EntityPtr element_ptr) {
     }
 }
 
-bool Quadtree::is_parent(const EntityPtr element_ptr) {
+bool Quadtree::is_parent(const CollisablePtr element_ptr) {
     for(auto& child : children_) {
         if(child->is_parent(element_ptr)) {
             return true;
@@ -150,8 +144,8 @@ bool Quadtree::is_parent(const EntityPtr element_ptr) {
     return (elements_.find(element_ptr) != elements_.end());
 }
 
-void Quadtree::remove(const EntityPtr element_ptr, std::unordered_map<EntityPtr, std::set<QuadtreePtr>>& quads_map) {
-    	elements_.erase(element_ptr);
+void Quadtree::remove(const CollisablePtr element_ptr, std::unordered_map<CollisablePtr, std::set<QuadtreePtr>>& quads_map) {
+    elements_.erase(element_ptr);
 
 	for(auto& kv_inserted : elements_) {
 		kv_inserted.second.erase(element_ptr);

@@ -12,6 +12,8 @@ class Sun : public Entity {
 		virtual ~Sun();
 
 		virtual void update();
+
+    private:
 };
 
 typedef std::shared_ptr<Sun> SunPtr;

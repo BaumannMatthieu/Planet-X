@@ -4,18 +4,6 @@
 #include "rectangle.h"
 
 QuadtreeHandler::QuadtreeHandler() {
-    Quadtree::set_element_in_quad_func([](const EntityPtr entity, const Rectangle& rect_qt) -> bool {
-        Rectangle rect = entity->get_box();
-        /*if(rect.get_pos().x_ + rect.get_size().x_ < rect_qt.x || 
-           rect.get_pos().y_ + rect.get_size().y_ < rect_qt.y ||
-           rect_qt.x + rect_qt.w < rect.get_pos().x_ ||
-           rect_qt.y + rect_qt.h < rect.get_pos().y_) {
-            return false;
-        }
-
-        return true;*/
-        return Rectangle::intersection(rect, rect_qt);
-    });
 	quadtree_ = std::make_shared<Quadtree>();	
 }
 
@@ -23,22 +11,22 @@ QuadtreeHandler::~QuadtreeHandler() {
 
 }
 
-void QuadtreeHandler::insert(const EntityPtr entity_ptr) {
-    quadtree_->insert(entity_ptr, quads_);
+void QuadtreeHandler::insert(const CollisablePtr collisable_ptr) {
+    quadtree_->insert(collisable_ptr, quads_);
 }
 
-void QuadtreeHandler::update(const EntityPtr entity_ptr) {
-	quadtree_->decrease_num_elements(entity_ptr);
+void QuadtreeHandler::update(const CollisablePtr collisable_ptr) {
+	quadtree_->decrease_num_elements(collisable_ptr);
 
-	for(auto& quad : quads_[entity_ptr]) {
-		quad->remove(entity_ptr, quads_);
+	for(auto& quad : quads_[collisable_ptr]) {
+		quad->remove(collisable_ptr, quads_);
 	}
-	for(auto& quad : quads_[entity_ptr]) {
+	for(auto& quad : quads_[collisable_ptr]) {
     		quad->update(quads_);
 	}
-	quads_[entity_ptr].clear();    	
+	quads_[collisable_ptr].clear();    	
 	
-    quadtree_->insert(entity_ptr, quads_);
+    quadtree_->insert(collisable_ptr, quads_);
 }
  
 

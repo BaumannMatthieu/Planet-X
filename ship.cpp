@@ -72,6 +72,6 @@ void Ship::update() {
 }
 
 void Ship::move() {
-    box_.translate(velocity_);
+    rect_.translate(velocity_);
     center_mass_ = center_mass_ + velocity_;
 }
