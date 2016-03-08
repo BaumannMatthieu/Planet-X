@@ -28,3 +28,14 @@ bool Rectangle::intersection(const Rectangle& r1, const Rectangle& r2) {
 
         return true;
 }
+
+bool Rectangle::intersection(const Point& p, const Rectangle& r) {
+       if(p.x_ >= r.pos_.x_ && 
+          p.x_ < r.pos_.x_ + r.w_ && 
+          p.y_ >= r.pos_.y_ &&
+          p.y_ < r.pos_.y_ + r.h_) {
+            return true;
+        }
+
+        return false;
+}
