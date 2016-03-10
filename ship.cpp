@@ -50,6 +50,14 @@ rad_focus_(500), rad_attack_(300), rad_near_(100) {
 		}
 	});
 	
+    StatePtr attacking = std::make_shared<State>([this] (const StatePtr current_state) {
+		Point seek_pos(512.f, 384.f);   
+
+        shoot = std::make_shared<Shoot>(center_mass_, seek_pos);  
+	
+    });
+
+
 	wandering->set_next_state(State::ATTACK_DISPLACEMENT, attack_moving);
 	attack_moving->set_next_state(State::WANDERING, wandering);
 

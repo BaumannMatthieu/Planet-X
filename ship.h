@@ -7,6 +7,8 @@
 #include "movable.h"
 #include "scriptable.h"
 #include "path.h"
+#include "shoot.h"
+
 
 class Ship : public Entity,
              public Movable,
@@ -26,6 +28,8 @@ class Ship : public Entity,
        	float rad_near_;
 
         Path attacking_displacement_;
+
+        ShootPtr shoot;
 };
 
 typedef std::shared_ptr<Ship> ShipPtr;

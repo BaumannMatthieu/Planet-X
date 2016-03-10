@@ -4,6 +4,7 @@
 #define FRAME_PER_SECOND 60
 
 static EventHandler event_handler;
+ContextScene Game::scene_;
 
 Game::Game() : running_(true), time_per_frame_(1000/FRAME_PER_SECOND) {
 
