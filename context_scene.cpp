@@ -13,11 +13,11 @@ ContextScene::ContextScene() {
 		    ShipPtr ship = std::make_shared<Ship>(box);
 
         	entitys_.push_back(ship);
-        	quadtree_handler_.insert(ship);
+        	//quadtree_handler_.insert(ship);
     	}
 	SunPtr sun = std::make_shared<Sun>();
 	entitys_.push_back(sun);
-	quadtree_handler_.insert(sun);
+	//quadtree_handler_.insert(sun);
 }
 
 ContextScene::~ContextScene() {
@@ -25,10 +25,13 @@ ContextScene::~ContextScene() {
 }
 
 void ContextScene::update() {
-   	for(auto& entity : entitys_) {
-            	entity->update();
-		//quadtree_handler_.update(entity);
-    	}
+    for(auto& entity : entitys_) {
+            entity->update();
+		    /* We know the type is an entity or a missile who
+             * are derived from both renderable and collisable
+             * a static_cast is a good option */
+             //quadtree_handler_.update(entity);
+    }
 }
 void ContextScene::draw(SDL_Renderer* renderer) {
     for(auto& entity : entitys_) {
@@ -36,3 +39,6 @@ void ContextScene::draw(SDL_Renderer* renderer) {
     }
 }
 
+void ContextScene::add_entity(RenderablePtr entity) {
+    entitys_.push_back(entity);
+}

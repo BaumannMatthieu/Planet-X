@@ -13,7 +13,7 @@ class Vertice : public Collisable {
         virtual bool compute(const Rectangle& rect) const;
 
     protected:
-        Point point_;
+        Point center_mass_;
 };
 
 #endif

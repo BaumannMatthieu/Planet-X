@@ -15,7 +15,8 @@ class Primitive : public Renderable {
 
 		void translate(const Vector2<float>& vector);
 		
-		void draw(SDL_Renderer* renderer);
+		virtual void draw(SDL_Renderer* renderer);
+        virtual void update();
 
 		virtual bool is_rectangle() const;
 		virtual bool is_polygon() const;

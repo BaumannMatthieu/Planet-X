@@ -25,8 +25,6 @@ class Game : public EventRegistrable {
 		SDL_Window* window_;
 		SDL_Renderer* renderer_;
 
-        	ContextScene scene_;
-
 		SDL_Event event_;
 		
 		bool running_;

@@ -2,6 +2,11 @@
 #include "ship.h"
 #include "path.h"
 #include "math.h"
+#include "shoot.h"
+
+#include "context_scene.h"
+
+extern ContextScene scene_;
 
 Ship::Ship(const Rectangle& box) : Entity(box), life_(100),
 rad_focus_(500), rad_attack_(300), rad_near_(100) {
@@ -35,7 +40,8 @@ rad_focus_(500), rad_attack_(300), rad_near_(100) {
 		if(distance <= rad_focus_) {
 			current_states_.erase(current_state);
 			current_states_.insert(current_state->get_next_state(State::ATTACK_DISPLACEMENT));
-		}
+			current_states_.insert(current_state->get_next_state(State::ATTACKING));
+        }
 	});
 
 	StatePtr attack_moving = std::make_shared<State>([this] (const StatePtr current_state) {
@@ -50,7 +56,19 @@ rad_focus_(500), rad_attack_(300), rad_near_(100) {
 		}
 	});
 	
+    StatePtr attacking = std::make_shared<State>([this] (const StatePtr current_state) {
+		Point seek_pos(512.f, 384.f);   
+
+        if(Shoot::is_castable()) {
+            ShootPtr shoot_ptr = std::make_shared<Shoot>(center_mass_, seek_pos);  
+	        scene_.add_entity(shoot_ptr);
+        }
+    });
+
+
 	wandering->set_next_state(State::ATTACK_DISPLACEMENT, attack_moving);
+	wandering->set_next_state(State::ATTACKING, attacking);
+
 	attack_moving->set_next_state(State::WANDERING, wandering);
 
 	current_states_.insert(wandering);

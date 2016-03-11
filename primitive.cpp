@@ -27,6 +27,10 @@ void Primitive::translate(const Vector2<float>& vector) {
     pos_ = pos_ + vector;    
 }
 
+void Primitive::update() {
+
+}
+
 bool Primitive::is_rectangle() const {
 	return false;
 }
