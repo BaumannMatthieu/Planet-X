@@ -29,7 +29,6 @@ Game::Game() : running_(true), time_per_frame_(1000/FRAME_PER_SECOND) {
 	    std::cerr << "Erreur lors de la creation d'un renderer : " << SDL_GetError();
 	    exit(EXIT_FAILURE);
 	}
-		
 	register_events();
 	past_time_ = SDL_GetTicks();
 }
@@ -83,13 +82,18 @@ void Game::register_events() {
 
 void Game::get_events() {
 	while(SDL_PollEvent(&event_)) {
-	}
+	/** handle player events */
+	event_handler.handle(event_);
+        }
+   
+	     /*if(event_.type == SDL_KEYDOWN) {
+            if(event_.key.keysym.sym == SDLK_LEFT) {
+                std::cout << "lksdjf" << std::endl;
+            }
+    }*/
 }
 
 void Game::update() {
-	/** handle player events */
-	event_handler.handle(event_);
-
 	/** run world update, enemys, environments, particules ... */
 	scene_.update();
 }

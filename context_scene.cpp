@@ -3,21 +3,28 @@
 #include "context_scene.h"
 #include "rectangle.h"
 #include "blaster_ship.h"
+#include "player.h"
 #include "sun.h"
+
+PlayerPtr player;
 
 ContextScene::ContextScene() {
 	std::srand(std::time(0));
     
-    	for(unsigned int i = 0; i < 1; i++) {
-        	Rectangle box(Vector2<float>(rand()%1024, rand()%768), 20.f, 20.f);
-		    BlasterPtr blaster = std::make_shared<Blaster>(box);
+    for(unsigned int i = 0; i < 1; i++) {
+        Rectangle box(Vector2<float>(rand()%1024, rand()%768), 20.f, 20.f);
+        BlasterPtr blaster = std::make_shared<Blaster>(box);
 
-        	entitys_.push_back(blaster);
-        	//quadtree_handler_.insert(ship);
-    	}
+        entitys_.push_back(blaster);
+        //quadtree_handler_.insert(ship);
+    }
 	SunPtr sun = std::make_shared<Sun>();
 	entitys_.push_back(sun);
 	//quadtree_handler_.insert(sun);
+
+    player = std::make_shared<Player>();
+	entitys_.push_back(player);
+	//quadtree_handler_.insert(player);
 }
 
 ContextScene::~ContextScene() {

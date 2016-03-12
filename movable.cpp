@@ -1,6 +1,6 @@
 #include "vector2.h"
 #include "movable.h"
-
+#include <iostream>
 
 const Vector2<float> Movable::compute_seek_force(const Point& source, const Point& destination) const {
     Vector2<float> desired_velocity = destination - source;
@@ -13,7 +13,7 @@ const Vector2<float> Movable::compute_seek_force(const Point& source, const Poin
 }
     
 const Vector2<float> Movable::compute_arrive_force(const Point& source, const Point& destination) const {
-	Vector2<float> desired_velocity = destination - source;
+    Vector2<float> desired_velocity = destination - source;
 	float distance = desired_velocity.get_norme();
     desired_velocity.normalize();
     float radius_stop = 100.0f;
