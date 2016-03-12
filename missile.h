@@ -4,7 +4,7 @@
 #include "renderable.h"
 #include "primitive.h"
 
-class Missile : virtual public Renderable {
+class Missile : public Renderable {
     public:
         Missile(const Point& focus, const Uint32& cooldown, const float degats, const SDL_Color& color);
         virtual ~Missile();

@@ -16,8 +16,8 @@ class Ship : public Entity,
 		Ship(const Rectangle& box);
 		virtual ~Ship();
 
-		virtual void move();
-		virtual void update();
+		void move();
+		void update();
 	private:
 		uint8_t life_;	
 

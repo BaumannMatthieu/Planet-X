@@ -14,10 +14,12 @@ Primitive::~Primitive() {
 }
 
 void Primitive::draw(SDL_Renderer* renderer) {
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	for(uint8_t i = 0; i < points_.size() - 1; i++) {
 		draw_line(renderer, points_[i], points_[i + 1]);
 	}
 	draw_line(renderer, points_.back(), points_.front());
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 }
 
 void Primitive::translate(const Vector2<float>& vector) {

@@ -25,9 +25,10 @@ ContextScene::~ContextScene() {
 }
 
 void ContextScene::update() {
+    update_entitys_content();
     for(auto& entity : entitys_) {
             entity->update();
-		    /* We know the type is an entity or a missile who
+            /* We know the type is an entity or a missile who
              * are derived from both renderable and collisable
              * a static_cast is a good option */
              //quadtree_handler_.update(entity);
@@ -40,5 +41,12 @@ void ContextScene::draw(SDL_Renderer* renderer) {
 }
 
 void ContextScene::add_entity(RenderablePtr entity) {
-    entitys_.push_back(entity);
+    add_entitys_.push(entity);
+}
+
+void ContextScene::update_entitys_content() {
+    while(!add_entitys_.empty()) {
+            entitys_.push_back(add_entitys_.front());
+            add_entitys_.pop();
+    }
 }

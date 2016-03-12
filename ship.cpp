@@ -60,8 +60,8 @@ rad_focus_(500), rad_attack_(300), rad_near_(100) {
 		Point seek_pos(512.f, 384.f);   
 
         if(Shoot::is_castable()) {
-            ShootPtr shoot_ptr = std::make_shared<Shoot>(center_mass_, seek_pos);  
-	        scene_.add_entity(shoot_ptr);
+            ShootPtr shoot_ptr = std::make_shared<Shoot>(center_mass_, seek_pos, 20.f);  
+            scene_.add_entity(shoot_ptr);
         }
     });
 
@@ -85,7 +85,6 @@ void Ship::update() {
 	acceleration_ = force_/mass_;
     velocity_ = velocity_ + acceleration_;
     Math::truncate(velocity_, max_velocity_);
-
 	move();
 }
 

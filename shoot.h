@@ -6,17 +6,21 @@
 #include "vertice.h"
 #include <memory>
 
-class Shoot : virtual public Missile,
+class Shoot : public Missile,
               public Movable,
               public Vertice {
     public:
-        Shoot(const Point& position, const Point& focus);
+        Shoot(const Point& position, const Point& focus, const float speed);
         virtual ~Shoot();
         
 		void draw(SDL_Renderer* renderer);
 		void update();
 
-        virtual void move();
+        void move();
+    
+    private:
+        float speed_;
+        float length_;
 };
 
 typedef std::shared_ptr<Shoot> ShootPtr;

@@ -11,7 +11,7 @@ class Entity : public Renderable,
 		Entity(const Rectangle& box);
 		virtual ~Entity();
 
-		virtual void draw(SDL_Renderer* renderer);
+		void draw(SDL_Renderer* renderer);
 		virtual void update() = 0;
 
 	protected:
