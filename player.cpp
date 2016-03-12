@@ -1,7 +1,11 @@
 #include "player.h"
 #include "event_handler.h"
 
+#include "shoot.h"
+#include "context_scene.h"
+
 extern EventHandler event_handler; 
+extern ContextScene scene_;
 
 Player::Player() : Ship(Rectangle(Vector2<float>(512.f, 384.f), 20.f, 20.f)),
                    stopped_(true), k_(0.5f) {
@@ -41,5 +45,15 @@ void Player::register_events() {
                                     center_mass_.y_ - 384 + event.motion.y);
         }
 	});
+
+    event_handler.add(SDL_KEYDOWN, [this] (const SDL_Event& event) {
+		if(event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE) {
+            if(Shoot::is_castable()) {
+                ShootPtr shoot_ptr = std::make_shared<Shoot>(center_mass_, focus_, 20.f);  
+                scene_.add_entity(shoot_ptr);
+            }
+        }
+	});
+
 }
 
