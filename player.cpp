@@ -24,20 +24,21 @@ void Player::update() {
 
 void Player::register_events() {
 	event_handler.add(SDL_KEYDOWN, [this] (const SDL_Event& event) {
-		if(event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_a) {
+		if(event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_z) {
             stopped_ = false;
         }
 	});
 
 	event_handler.add(SDL_KEYUP, [this] (const SDL_Event& event) {
-		if(event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_a) {
+		if(event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_z) {
             stopped_ = true;
         }
 	});
 
     event_handler.add(SDL_MOUSEMOTION, [this] (const SDL_Event& event) {
 		if(event.type == SDL_MOUSEMOTION) {
-            focus_ = Vector2<float>(event.motion.x, event.motion.y);
+            focus_ = Vector2<float>(center_mass_.x_ - 512 + event.motion.x,
+                                    center_mass_.y_ - 384 + event.motion.y);
         }
 	});
 }

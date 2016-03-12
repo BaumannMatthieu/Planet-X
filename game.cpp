@@ -82,15 +82,9 @@ void Game::register_events() {
 
 void Game::get_events() {
 	while(SDL_PollEvent(&event_)) {
-	/** handle player events */
-	event_handler.handle(event_);
-        }
-   
-	     /*if(event_.type == SDL_KEYDOWN) {
-            if(event_.key.keysym.sym == SDLK_LEFT) {
-                std::cout << "lksdjf" << std::endl;
-            }
-    }*/
+        /** handle player events */
+	    event_handler.handle(event_);
+    }
 }
 
 void Game::update() {

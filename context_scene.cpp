@@ -53,7 +53,7 @@ void ContextScene::add_entity(RenderablePtr entity) {
 
 void ContextScene::update_entitys_content() {
     while(!add_entitys_.empty()) {
-            entitys_.push_back(add_entitys_.front());
-            add_entitys_.pop();
+        entitys_.push_back(add_entitys_.front());
+        add_entitys_.pop();
     }
 }

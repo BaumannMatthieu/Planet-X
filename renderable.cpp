@@ -1,5 +1,7 @@
 #include "renderable.h"
+#include "player.h"
 
+extern PlayerPtr player;
 
 Renderable::Renderable() {
 
@@ -10,6 +12,11 @@ Renderable::~Renderable() {
 }
 
 void Renderable::draw_line(SDL_Renderer* renderer, const Vector2<float>& first_point, const Vector2<float>& second_point) {	
-	SDL_RenderDrawLine(renderer, first_point.x_, first_point.y_,
-			second_point.x_, second_point.y_);
+    Point player_pos = player->get_box_rect().get_pos();
+    
+    SDL_RenderDrawLine(renderer,
+                       first_point.x_ - player_pos.x_ + WINDOW_WIDTH/2,
+                       first_point.y_ - player_pos.y_ + WINDOW_HEIGHT/2,
+			           second_point.x_ - player_pos.x_ + WINDOW_WIDTH/2,
+                       second_point.y_ - player_pos.y_ + WINDOW_HEIGHT/2);
 }
