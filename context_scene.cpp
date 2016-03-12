@@ -2,7 +2,7 @@
 #include "vector2.h"
 #include "context_scene.h"
 #include "rectangle.h"
-#include "ship.h"
+#include "blaster_ship.h"
 #include "sun.h"
 
 ContextScene::ContextScene() {
@@ -10,9 +10,9 @@ ContextScene::ContextScene() {
     
     	for(unsigned int i = 0; i < 1; i++) {
         	Rectangle box(Vector2<float>(rand()%1024, rand()%768), 20.f, 20.f);
-		    ShipPtr ship = std::make_shared<Ship>(box);
+		    BlasterPtr blaster = std::make_shared<Blaster>(box);
 
-        	entitys_.push_back(ship);
+        	entitys_.push_back(blaster);
         	//quadtree_handler_.insert(ship);
     	}
 	SunPtr sun = std::make_shared<Sun>();
