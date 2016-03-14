@@ -12,7 +12,7 @@ class Missile : public Renderable {
 		virtual void draw(SDL_Renderer* renderer) = 0;
 		virtual void update() = 0;
 
-        static bool is_castable();
+        static bool is_castable(Uint32& last_cast_time);
 
     protected:
         float degats_;

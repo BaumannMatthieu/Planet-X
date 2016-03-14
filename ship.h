@@ -5,6 +5,7 @@
 #include "entity.h"
 #include "rectangle.h"
 #include "movable.h"
+#include "missile_handler.h"
 
 class Ship : public Entity,
              public Movable {
@@ -14,6 +15,9 @@ class Ship : public Entity,
 
 		void move();
 		virtual void update();
+    
+    protected:
+        MissileHandler missile_handler;
 	private:
 		uint8_t life_;	
 

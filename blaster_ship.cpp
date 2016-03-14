@@ -3,10 +3,7 @@
 #include "path.h"
 #include "math.h"
 #include "shoot.h"
-
-#include "context_scene.h"
-
-extern ContextScene scene_;
+#include "missile_handler.h"
 
 Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
 	mass_ = 20;
@@ -58,10 +55,7 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
     StatePtr attacking = std::make_shared<State>([this] (const StatePtr current_state) {
 		Point seek_pos(512.f, 384.f);   
 
-        if(Shoot::is_castable()) {
-            ShootPtr shoot_ptr = std::make_shared<Shoot>(center_mass_, seek_pos, 20.f);  
-            scene_.add_entity(shoot_ptr);
-        }
+        missile_handler.cast_missile(center_mass_, seek_pos);
     });
 
 
