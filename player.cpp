@@ -46,8 +46,8 @@ void Player::register_events() {
         }
 	});
 
-    event_handler.add(SDL_KEYDOWN, [this] (const SDL_Event& event) {
-		if(event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE) {
+    event_handler.add(SDL_MOUSEBUTTONDOWN, [this] (const SDL_Event& event) {
+        if(event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
             if(Shoot::is_castable()) {
                 ShootPtr shoot_ptr = std::make_shared<Shoot>(center_mass_, focus_, 20.f);  
                 scene_.add_entity(shoot_ptr);
