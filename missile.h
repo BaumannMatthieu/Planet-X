@@ -6,13 +6,13 @@
 
 class Missile : public Renderable {
     public:
-        Missile(const Point& focus, const Uint32& cooldown, const float degats, const SDL_Color& color);
+        Missile(const Point& focus, const float degats, const SDL_Color& color);
         virtual ~Missile();
         
 		virtual void draw(SDL_Renderer* renderer) = 0;
 		virtual void update() = 0;
 
-        static bool is_castable();
+        static bool is_castable(Uint32& last_cast_time, const Uint32 cooldown);
 
     protected:
         float degats_;

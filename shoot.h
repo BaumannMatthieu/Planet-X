@@ -10,7 +10,9 @@ class Shoot : public Missile,
               public Movable,
               public Vertice {
     public:
-        Shoot(const Point& position, const Point& focus, const float speed);
+        Shoot(const Point& position,
+              const Point& focus,
+              const float speed);
         virtual ~Shoot();
         
 		void draw(SDL_Renderer* renderer);

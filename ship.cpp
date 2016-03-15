@@ -32,3 +32,7 @@ void Ship::move() {
     rect_.translate(velocity_);
     center_mass_ = center_mass_ + velocity_;
 }
+
+bool Ship::is_player() const {
+    return false;
+}

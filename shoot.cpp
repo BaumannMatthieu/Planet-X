@@ -1,7 +1,7 @@
 #include <iostream>
 #include "shoot.h"
 
-Shoot::Shoot(const Point& position, const Point& focus, const float speed) : Missile(focus, 250, 5, {255, 0, 0, 255}), Vertice(position), speed_(speed) {
+Shoot::Shoot(const Point& position, const Point& focus, const float speed) : Missile(focus, 5, {255, 0, 0, 255}), Vertice(position), speed_(speed) {
     velocity_ = focus_ - center_mass_;
     velocity_.normalize();
     velocity_ = velocity_*speed_;

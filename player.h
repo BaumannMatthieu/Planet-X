@@ -13,9 +13,12 @@ class Player : public Ship,
 
 		void update();
         void register_events();
+    
+        bool is_player() const;
 
     private:
         bool stopped_;
+        bool ready_to_cast_;
         float k_;
         Point focus_;
 };
