@@ -7,7 +7,8 @@
 
 Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
 	mass_ = 20;
-    missile_handler = std::make_shared<MissileHandler>();
+    SDL_Color color_missile = {255, 0, 0, 255};
+    missile_handler = std::make_shared<MissileHandler>(color_missile);
     max_velocity_ = 10.0f;
     max_force_ = 15; 
 	velocity_ = Vector2<float>(-0.1f, -0.1f);

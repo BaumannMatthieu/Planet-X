@@ -12,7 +12,8 @@ class Shoot : public Missile,
     public:
         Shoot(const Point& position,
               const Point& focus,
-              const float speed);
+              const float speed,
+              const SDL_Color& color);
         virtual ~Shoot();
         
 		void draw(SDL_Renderer* renderer);
