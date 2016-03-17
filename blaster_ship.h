@@ -4,7 +4,7 @@
 #include <memory>
 #include "ship.h"
 #include "scriptable.h"
-#include "path.h"
+#include "centered_path.h"
 
 class Blaster : public Ship,
                 public Scriptable,
@@ -16,7 +16,7 @@ class Blaster : public Ship,
 		void update();
 	private:
        	float rad_focus_;
-        Path attacking_displacement_;
+        CenteredPathPtr attacking_displacement_;
 };
 
 typedef std::shared_ptr<Blaster> BlasterPtr;

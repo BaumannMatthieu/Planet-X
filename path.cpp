@@ -23,6 +23,10 @@ void Path::add_point(const Point& point) {
     points_.push_back(point);
 }
 
+void Path::clear() {
+    points_.clear();
+}
+
 const Vector2<float> Path::execute(std::shared_ptr<Ship> ship) {
     Point pos = ship->get_position();
     if(!repeat_ && current_destination_ == points_.size() - 1) {

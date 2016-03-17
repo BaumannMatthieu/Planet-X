@@ -11,6 +11,10 @@ PlayerPtr player;
 ContextScene::ContextScene() {
 	std::srand(std::time(0));
     
+    player = std::make_shared<Player>();
+	entitys_.push_back(player);
+	//quadtree_handler_.insert(player);
+    
     for(unsigned int i = 0; i < 1; i++) {
         Rectangle box(Vector2<float>(rand()%1024, rand()%768), 20.f, 20.f);
         BlasterPtr blaster = std::make_shared<Blaster>(box);
@@ -22,9 +26,6 @@ ContextScene::ContextScene() {
 	entitys_.push_back(sun);
 	//quadtree_handler_.insert(sun);
 
-    player = std::make_shared<Player>();
-	entitys_.push_back(player);
-	//quadtree_handler_.insert(player);
 }
 
 ContextScene::~ContextScene() {

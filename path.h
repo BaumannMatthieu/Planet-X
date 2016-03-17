@@ -14,11 +14,13 @@ class Path {
         ~Path();
 
         void add_point(const Point& point);
+        void clear();
 
         const Vector2<float> execute(std::shared_ptr<Ship> ship);
-    private:
     
+    protected:
         std::vector<Point> points_;
+    private:
         float radius_;
         bool repeat_;
         uint8_t current_destination_;
