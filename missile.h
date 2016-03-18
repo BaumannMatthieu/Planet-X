@@ -16,7 +16,7 @@ class Missile : public Renderable {
 
     protected:
         float degats_;
-        
+                
         SDL_Color color_;
 
         Point focus_;

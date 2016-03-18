@@ -55,36 +55,37 @@ void Game::run() {
 }
 
 void Game::register_events() {
-	event_handler.add(SDL_KEYDOWN, [this] (const SDL_Event& event) {
-		if(event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_UP) {
-			std::cout << "up detected !" << std::endl;
-		}
-	});
-
-	event_handler.add(SDL_KEYDOWN, [this] (const SDL_Event& event) {
-		if(event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_DOWN) {
-			std::cout << "down detected !" << std::endl;
-		}
-	});
-
-	event_handler.add(SDL_KEYDOWN, [this] (const SDL_Event& event) {
-		if(event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
+	event_handler.add(SDL_KEYDOWN, [this] (const EventData& event_data) {
+		const Uint8* state = event_data.get_key_state();
+        if(state[SDL_SCANCODE_ESCAPE]) {
 			running_ = false;
 		}
 	});
 
-	event_handler.add(SDL_QUIT, [this] (const SDL_Event& event) {
+	/*event_handler.add(SDL_QUIT, [this] (const SDL_Event& event) {
 		if(event.type == SDL_QUIT) {
 			running_ = false;
 		}
-	});
+	});*/
 }
 
 void Game::get_events() {
-	while(SDL_PollEvent(&event_)) {
-        /** handle player events */
-	    event_handler.handle(event_);
+	SDL_PumpEvents();
+    event_data_.update_event_queue(); 
+    
+    /** handle player events */
+    /*key_state = SDL_GetKeyboardState(NULL);
+    if(state[SDL_SCANCODE_RETURN]) {
+        printf("<RETURN> is pressed.\n");
     }
+    if(state[SDL_SCANCODE_RIGHT] && state[SDL_SCANCODE_UP]) {
+        printf("Right and Up Keys Pressed.\n");
+    }
+    int x, y;
+    if(SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+        printf("Left mouse clic at : (%d, %d).\n", x, y);
+    }*/
+    event_handler.handle(event_data_);
 }
 
 void Game::update() {

@@ -9,7 +9,7 @@ class MissileHandler {
         MissileHandler(const SDL_Color& color, const Uint32 cooldown=250);
         virtual ~MissileHandler();
 
-        void cast_missile(const Point& pos, const Point& focus);        
+        void cast_missile(const Point& pos, const Point& focus, const float speed);        
 
     private:
         Uint32 last_cast_time_;

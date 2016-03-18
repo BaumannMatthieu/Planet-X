@@ -4,6 +4,7 @@
 #include <memory>
 #include "event_registrable.h"
 #include "event_handler.h"
+#include "event_data.h"
 #include "context_scene.h"
 
 #define WINDOW_WIDTH 1024
@@ -25,8 +26,8 @@ class Game : public EventRegistrable {
 		SDL_Window* window_;
 		SDL_Renderer* renderer_;
 
-		SDL_Event event_;
-		
+        EventData event_data_;
+
 		bool running_;
 		Uint32 time_per_frame_;
 		Uint32 past_time_;

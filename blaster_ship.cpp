@@ -61,7 +61,7 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
 	});
 	
     StatePtr attacking = std::make_shared<State>([this] (const StatePtr current_state) {
-        missile_handler->cast_missile(center_mass_, player->get_position());
+        missile_handler->cast_missile(center_mass_, player->get_position(), 10.0f);
     });
 
 

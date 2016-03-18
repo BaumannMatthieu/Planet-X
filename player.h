@@ -18,11 +18,9 @@ class Player : public Ship,
 
     private:
         bool stopped_;
-        bool ready_to_cast_;
         float k_;
         Point focus_;
-
-        Point mouse_;
+        Point dir_;
 };
 
 typedef std::shared_ptr<Player> PlayerPtr;

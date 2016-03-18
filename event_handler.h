@@ -7,7 +7,9 @@
 #include <functional>
 #include <iostream>
 
-typedef std::function<void(const SDL_Event&)> Callback;
+#include "event_data.h"
+
+typedef std::function<void(const EventData&)> Callback;
 
 class EventHandler {
 	public:
@@ -15,9 +17,9 @@ class EventHandler {
 		~EventHandler();
 	
 		void add(const SDL_EventType& event_type,
-			 const Callback& callback);
+    			 const Callback& callback);
 
-		void handle(const SDL_Event& event);
+		void handle(const EventData& event_data);
 	private:
 		std::map<SDL_EventType, std::vector<Callback>> events_map_;
 };
