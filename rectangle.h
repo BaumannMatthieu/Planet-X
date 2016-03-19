@@ -7,8 +7,9 @@
 
 class Rectangle : public Primitive {
 	public:
-		Rectangle() { }
+		Rectangle();
 		Rectangle(const Point& pos, const float w, const float h);
+		Rectangle(const Rectangle& rect);
 		virtual ~Rectangle();	
 		
 		bool is_rectangle() const override;
@@ -16,6 +17,8 @@ class Rectangle : public Primitive {
         static bool intersection(const Rectangle& r1, const Rectangle& r2);
         static bool intersection(const Point& p, const Rectangle& r);
 	    const Vector2<float> get_size() const;
+        
+        Rectangle& operator=(const Rectangle& rect);
     private:
 		float w_, h_;
 };

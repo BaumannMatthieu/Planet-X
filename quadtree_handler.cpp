@@ -11,8 +11,21 @@ QuadtreeHandler::~QuadtreeHandler() {
 
 }
 
+
+void QuadtreeHandler::update(const std::vector<CollisablePtr>& collisables) {
+    quadtree_.reset();
+    quads_.clear();
+
+	quadtree_ = std::make_shared<Quadtree>();	
+    
+	for(auto& col : collisables) {
+		quadtree_->insert(col, quads_, 0);
+	}
+}
+
+
 void QuadtreeHandler::insert(const CollisablePtr collisable_ptr) {
-    quadtree_->insert(collisable_ptr, quads_);
+    quadtree_->insert(collisable_ptr, quads_, 0);
 }
 
 void QuadtreeHandler::update(const CollisablePtr collisable_ptr) {
@@ -26,7 +39,10 @@ void QuadtreeHandler::update(const CollisablePtr collisable_ptr) {
 	}
 	quads_[collisable_ptr].clear();    	
 	
-    quadtree_->insert(collisable_ptr, quads_);
+    quadtree_->insert(collisable_ptr, quads_, 0);
 }
  
+QuadtreePtr QuadtreeHandler::get_quadtree() const {
+    return quadtree_;
+}
 

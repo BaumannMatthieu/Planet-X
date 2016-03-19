@@ -4,12 +4,9 @@
 
 #include "shoot.h"
 
-#define WINDOW_WIDTH 1024
-#define WINDOW_HEIGHT 768
-
 extern EventHandler event_handler; 
 
-Player::Player() : Ship(Rectangle(Vector2<float>(512.f, 384.f), 20.f, 20.f)), stopped_(true), k_(0.5f) {
+Player::Player() : Ship(Rectangle(Vector2<float>(WINDOW_WIDTH/2.f - 10.f, WINDOW_HEIGHT/2.f - 10.f), 20.f, 20.f)), stopped_(true), k_(0.5f) {
     mass_ = 5.0f;
     SDL_Color color_missile = {0, 255, 0, 255};
     missile_handler = std::make_shared<MissileHandler>(color_missile, 100);
@@ -74,8 +71,8 @@ void Player::register_events() {
     event_handler.add(SDL_MOUSEMOTION, [this] (const EventData& event_data) {
 		const Vector2<int> mouse_coord = event_data.get_mouse_coordinates();
         
-        focus_ = Vector2<float>(center_mass_.x_ - 512 + mouse_coord.x_,
-                                center_mass_.y_ - 384 + mouse_coord.y_);
+        focus_ = Vector2<float>(center_mass_.x_ - WINDOW_WIDTH/2 + mouse_coord.x_,
+                                center_mass_.y_ - WINDOW_HEIGHT/2 + mouse_coord.y_);
 	});
 
     event_handler.add(SDL_MOUSEBUTTONDOWN, [this] (const EventData& event_data) {

@@ -23,6 +23,8 @@ class Primitive : public Renderable {
     
         const Point& get_pos() const;
         const std::vector<Point>& get_points() const;
+
+        Primitive& operator=(const Primitive& primitive);
 	protected:
 		std::vector<Point> points_;
 		Point pos_;

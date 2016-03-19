@@ -13,7 +13,7 @@ const Point& Vertice::get_position() const {
 }
 
 bool Vertice::compute(const Rectangle& rect) const {
-   return Rectangle::intersection(center_mass_, rect); 
+   return Rectangle::intersection(Rectangle(center_mass_, 10.f, 10.f), rect); 
 }
 
 

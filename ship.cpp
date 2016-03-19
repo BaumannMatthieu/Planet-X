@@ -8,7 +8,7 @@
 
 extern ContextScene scene_;
 
-Ship::Ship(const Rectangle& box) : Entity(box), life_(100) {
+Ship::Ship(const Rectangle& box) : SpriteEntity(box), life_(100) {
 	mass_ = 20;
     max_velocity_ = 10.0f;
     max_force_ = 15; 

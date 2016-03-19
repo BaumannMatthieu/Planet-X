@@ -16,5 +16,6 @@ void MissileHandler::cast_missile(const Point& pos, const Point& focus, const fl
     if(Shoot::is_castable(last_cast_time_, cooldown_)) {
         ShootPtr shoot_ptr = std::make_shared<Shoot>(pos, focus, speed, color_);  
         scene_.add_entity(shoot_ptr);
+        scene_.add_collisable(shoot_ptr);
     }
 }

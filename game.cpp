@@ -1,5 +1,4 @@
 #include "game.h"
-#include "entity.h"
 
 #define FRAME_PER_SECOND 60
 
@@ -15,13 +14,12 @@ Game::Game() : running_(true), time_per_frame_(1000/FRAME_PER_SECOND) {
 	}
 
 	// Création de la fenêtre :
-	window_ = SDL_CreateWindow("sdl window" , SDL_WINDOWPOS_CENTERED , SDL_WINDOWPOS_CENTERED ,WINDOW_WIDTH, WINDOW_HEIGHT , SDL_WINDOW_RESIZABLE);
+	window_ = SDL_CreateWindow("sdl window" , SDL_WINDOWPOS_CENTERED , SDL_WINDOWPOS_CENTERED ,WINDOW_WIDTH, WINDOW_HEIGHT , SDL_WINDOW_FULLSCREEN_DESKTOP);
 	if(window_ == NULL) // Gestion des erreurs
 	{
 	    std::cerr << "Erreur lors de la creation d'une fenetre : " << SDL_GetError();
 	    exit(EXIT_FAILURE);
 	}
-
 	renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC); // Création du renderer
 
 	if(renderer_ == NULL)//gestion des erreurs
@@ -61,8 +59,8 @@ void Game::register_events() {
 			running_ = false;
 		}
 	});
-
-	/*event_handler.add(SDL_QUIT, [this] (const SDL_Event& event) {
+/*
+	event_handler.add(SDL_QUIT, [this] (const SDL_Event& event) {
 		if(event.type == SDL_QUIT) {
 			running_ = false;
 		}
@@ -74,17 +72,6 @@ void Game::get_events() {
     event_data_.update_event_queue(); 
     
     /** handle player events */
-    /*key_state = SDL_GetKeyboardState(NULL);
-    if(state[SDL_SCANCODE_RETURN]) {
-        printf("<RETURN> is pressed.\n");
-    }
-    if(state[SDL_SCANCODE_RIGHT] && state[SDL_SCANCODE_UP]) {
-        printf("Right and Up Keys Pressed.\n");
-    }
-    int x, y;
-    if(SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-        printf("Left mouse clic at : (%d, %d).\n", x, y);
-    }*/
     event_handler.handle(event_data_);
 }
 

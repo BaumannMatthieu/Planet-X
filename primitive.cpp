@@ -48,3 +48,12 @@ const Point& Primitive::get_pos() const {
 const std::vector<Point>& Primitive::get_points() const {
     return points_;
 }
+
+Primitive& Primitive::operator=(const Primitive& primitive) {
+    if(this != &primitive) {
+        points_ = primitive.points_;
+        pos_ = primitive.pos_;
+    }
+    
+    return *this;
+}

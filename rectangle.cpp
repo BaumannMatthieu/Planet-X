@@ -1,4 +1,9 @@
 #include "rectangle.h"
+#include <iostream>
+
+Rectangle::Rectangle() {
+
+}
 
 Rectangle::Rectangle(const Point& pos, const float w, const float h) : Primitive({}, pos), w_(w), h_(h) {
 	points_.push_back(pos_);
@@ -30,12 +35,25 @@ bool Rectangle::intersection(const Rectangle& r1, const Rectangle& r2) {
 }
 
 bool Rectangle::intersection(const Point& p, const Rectangle& r) {
-       if(p.x_ >= r.pos_.x_ && 
+       if(p.x_ > r.pos_.x_ && 
           p.x_ < r.pos_.x_ + r.w_ && 
-          p.y_ >= r.pos_.y_ &&
+          p.y_ > r.pos_.y_ &&
           p.y_ < r.pos_.y_ + r.h_) {
             return true;
         }
 
         return false;
+}
+
+Rectangle::Rectangle(const Rectangle& rect) {
+    *this = rect;
+}
+
+Rectangle& Rectangle::operator=(const Rectangle& rect) {
+    Primitive::operator=(rect);
+    if(this != &rect) {
+        w_ = rect.w_;
+        h_ = rect.h_;
+    }
+    return *this;
 }

@@ -2,12 +2,12 @@
 #define __SHIP_H__
 
 #include <memory>
-#include "entity.h"
+#include "sprite_entity.h"
 #include "rectangle.h"
 #include "movable.h"
 #include "missile_handler.h"
 
-class Ship : public Entity,
+class Ship : public SpriteEntity,
              public Movable {
 	public:
 		Ship(const Rectangle& box);

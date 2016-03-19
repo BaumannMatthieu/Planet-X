@@ -6,12 +6,11 @@
 #include "rectangle.h"
 
 uint8_t Quadtree::max_elements_ = 4;
-
-Rectangle Quadtree::global_rect_ = {Vector2<float>(0.f, 0.f), 1024.f, 768.f};
+uint8_t Quadtree::max_deep_ = 4;
 
 Quadtree::Quadtree(const QuadtreePtr parent, const uint8_t location) : parent_(parent), num_elements_(0) {
-	if(parent_ == nullptr && location == NONE) {
-		rect_ = global_rect_;
+    if(parent_ == nullptr && location == NONE) {
+		rect_ = Rectangle(Vector2<float>(0.f, 0.f), WINDOW_WIDTH, WINDOW_HEIGHT);
 		return;
 	}
 
@@ -50,11 +49,11 @@ Quadtree::~Quadtree() {
 
 }
 
-void Quadtree::insert(const CollisablePtr element_ptr, std::unordered_map<CollisablePtr, std::set<QuadtreePtr>>& quads_map) {
+void Quadtree::insert(const CollisablePtr element_ptr, std::unordered_map<CollisablePtr, std::set<QuadtreePtr>>& quads_map, const uint8_t deep) {
 	if(element_ptr->compute(rect_)) {
         num_elements_++;
 		if(children_.empty()) {
-            if(elements_.size() < max_elements_) {
+            if(elements_.size() < max_elements_||deep >= max_deep_) {
 				if(elements_.empty()) {
 					elements_[element_ptr] = std::set<CollisablePtr>();
 	                quads_map[element_ptr].insert(shared_from_this());
@@ -81,7 +80,7 @@ void Quadtree::insert(const CollisablePtr element_ptr, std::unordered_map<Collis
 			    for(auto& kv_inserted : elements_) {
 				    const CollisablePtr element_already_ptr(kv_inserted.first);
                     quads_map[element_already_ptr].erase(shared_from_this());
-				    child_ptr->insert(element_already_ptr, quads_map);	
+				    child_ptr->insert(element_already_ptr, quads_map, deep + 1);	
                 }
             }
 		    if(!elements_.empty())
@@ -89,7 +88,7 @@ void Quadtree::insert(const CollisablePtr element_ptr, std::unordered_map<Collis
     	}
 		
         for(auto& child_ptr : children_) {
-		    child_ptr->insert(element_ptr, quads_map);
+		    child_ptr->insert(element_ptr, quads_map, deep + 1);
 		}
 	}
 }
@@ -99,7 +98,7 @@ void Quadtree::update(std::unordered_map<CollisablePtr, std::set<QuadtreePtr>>& 
 		return;
 	}
 
- 	if(parent_->num_elements_ <= max_elements_ && !parent_->children_.empty()) {
+ 	if(parent_->num_elements_ < max_elements_ && !parent_->children_.empty()) {
 		std::set<CollisablePtr> elts_to_insert; 
 		parent_->get_all_children_elt(elts_to_insert);
 		    
@@ -108,7 +107,7 @@ void Quadtree::update(std::unordered_map<CollisablePtr, std::set<QuadtreePtr>>& 
 		
 		for(auto& elt_to_insert : elts_to_insert) {
 		    quads_map[elt_to_insert].erase(shared_from_this());
-		    parent_->insert(elt_to_insert, quads_map);
+		    parent_->insert(elt_to_insert, quads_map, 0);
 		}
 
 		parent_->update(quads_map); 
@@ -151,5 +150,4 @@ void Quadtree::remove(const CollisablePtr element_ptr, std::unordered_map<Collis
 		kv_inserted.second.erase(element_ptr);
 	}
 }
-
 

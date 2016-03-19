@@ -7,8 +7,8 @@
 #include "event_data.h"
 #include "context_scene.h"
 
-#define WINDOW_WIDTH 1024
-#define WINDOW_HEIGHT 768
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
 
 class Game : public EventRegistrable {
 	public:

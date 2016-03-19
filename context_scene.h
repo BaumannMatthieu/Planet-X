@@ -16,12 +16,16 @@ class ContextScene : public Renderable {
         void draw(SDL_Renderer* renderer);
 
         void add_entity(RenderablePtr entity);
+        void add_collisable(CollisablePtr collisable);
 
     private:
         void update_entitys_content();
         
         std::vector<RenderablePtr> entitys_;
+        std::vector<CollisablePtr> collisables_;
+
         std::queue<RenderablePtr> add_entitys_;
+        std::queue<CollisablePtr> add_collisables_;
 
         QuadtreeHandler quadtree_handler_; 
 };
