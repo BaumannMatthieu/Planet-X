@@ -6,12 +6,13 @@
 
 class MissileHandler {
     public:
-        MissileHandler(const SDL_Color& color, const Uint32 cooldown=250);
+        MissileHandler(const std::weak_ptr<Ship> caster, const SDL_Color& color, const Uint32 cooldown=250);
         virtual ~MissileHandler();
 
         void cast_missile(const Point& pos, const Point& focus, const float speed);        
 
     private:
+        std::weak_ptr<Ship> caster_;
         Uint32 last_cast_time_;
         
         SDL_Color color_;

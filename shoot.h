@@ -9,7 +9,8 @@
 class Shoot : public Missile,
               public Movable {
     public:
-        Shoot(const Point& position,
+        Shoot(const std::weak_ptr<Ship> caster,
+              const Point& position,
               const Point& focus,
               const float speed,
               const SDL_Color& color);

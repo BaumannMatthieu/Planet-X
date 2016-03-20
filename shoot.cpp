@@ -2,7 +2,7 @@
 #include "shoot.h"
 #include "rectangle.h"
 
-Shoot::Shoot(const Point& position, const Point& focus, const float speed, const SDL_Color& color) : Missile(focus, 5, color), vertice_(position), speed_(speed) {
+Shoot::Shoot(const std::weak_ptr<Ship> caster, const Point& position, const Point& focus, const float speed, const SDL_Color& color) : Missile(caster, focus, 5, color), vertice_(position), speed_(speed) {
     velocity_ = focus_ - vertice_.center_mass_;
     velocity_.normalize();
     velocity_ = velocity_*speed_;

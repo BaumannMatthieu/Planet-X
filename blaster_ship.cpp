@@ -11,8 +11,6 @@ extern PlayerPtr player;
 Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
 	mass_ = 20;
     damage_ = 5;
-    SDL_Color color_missile = {255, 0, 0, 255};
-    missile_handler = std::make_shared<MissileHandler>(color_missile);
     attacking_displacement_ = std::make_shared<CenteredPath>(player->get_position());
     max_velocity_ = 10.0f;
     max_force_ = 15; 
@@ -72,6 +70,12 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
 	attack_moving->set_next_state(State::WANDERING, wandering);
 
 	current_states_.insert(wandering);
+}
+
+void Blaster::init_missile_handler() {
+    SDL_Color color_missile = {255, 0, 0, 255};
+    std::weak_ptr<Ship> weak_from_this(shared_from_this());
+    missile_handler = std::make_shared<MissileHandler>(weak_from_this, color_missile);
 }
 
 Blaster::~Blaster() {

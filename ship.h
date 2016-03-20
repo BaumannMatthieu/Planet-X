@@ -14,6 +14,8 @@ class Ship : public SpriteEntity,
 		Ship(const Rectangle& box);
 		virtual ~Ship();
 
+        virtual void init_missile_handler() = 0;
+
 		void move();
 		virtual void update();
         

@@ -4,9 +4,11 @@
 #include "primitive.h"
 #include "entity.h"
 
+class Ship;
+
 class Missile : public Entity {
     public:
-        Missile(const Point& focus, const uint8_t degats, const SDL_Color& color);
+        Missile(const std::weak_ptr<Ship> caster, const Point& focus, const uint8_t degats, const SDL_Color& color);
         virtual ~Missile();
         
 		virtual void draw(SDL_Renderer* renderer) = 0;
@@ -16,7 +18,11 @@ class Missile : public Entity {
         static bool is_castable(Uint32& last_cast_time, const Uint32 cooldown);
 
         const uint8_t get_damage() const;
+
+        std::weak_ptr<Ship> get_caster() const;
+    
     protected:
+        std::weak_ptr<Ship> caster_; 
         uint8_t degats_;
                 
         SDL_Color color_;

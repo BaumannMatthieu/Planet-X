@@ -11,6 +11,8 @@ class Blaster : public Ship,
 	public:
 		Blaster(const Rectangle& box);
 		virtual ~Blaster();
+        
+        void init_missile_handler();
 
 		void update();
 	private:

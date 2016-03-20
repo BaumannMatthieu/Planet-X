@@ -11,7 +11,9 @@ class Player : public Ship,
 		Player();
 		virtual ~Player();
 
-		void update();
+        void init_missile_handler();
+		
+        void update();
         void register_events();
     
         bool is_player() const;

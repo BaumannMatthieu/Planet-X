@@ -9,10 +9,14 @@ extern EventHandler event_handler;
 Player::Player() : Ship(Rectangle(Vector2<float>(WINDOW_WIDTH/2.f - 10.f, WINDOW_HEIGHT/2.f - 10.f), 20.f, 20.f)), stopped_(true), k_(0.5f) {
     mass_ = 5.0f;
     damage_ = 20;
-    SDL_Color color_missile = {0, 255, 0, 255};
-    missile_handler = std::make_shared<MissileHandler>(color_missile, 100);
     dir_ = box_.center_mass_;
 	register_events();
+}
+
+void Player::init_missile_handler() {
+    SDL_Color color_missile = {0, 255, 0, 255};
+    std::weak_ptr<Ship> weak_from_this(shared_from_this());
+    missile_handler = std::make_shared<MissileHandler>(weak_from_this, color_missile, 100);
 }
 
 Player::~Player() {

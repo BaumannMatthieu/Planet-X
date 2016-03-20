@@ -15,11 +15,14 @@ ContextScene::ContextScene() {
 	std::srand(std::time(0));
     
     player = std::make_shared<Player>();
+    player->init_missile_handler();
+
 	entitys_.insert(player);
     
     for(unsigned int i = 0; i < 5; i++) {
         Rectangle box(Vector2<float>(rand()%WINDOW_WIDTH, rand()%WINDOW_HEIGHT), 20.f, 20.f);
         BlasterPtr blaster = std::make_shared<Blaster>(box);
+        blaster->init_missile_handler();
 
         entitys_.insert(blaster);
     }
