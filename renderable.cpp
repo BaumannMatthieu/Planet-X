@@ -12,7 +12,7 @@ Renderable::~Renderable() {
 }
 
 void Renderable::draw_line(SDL_Renderer* renderer, const Vector2<float>& first_point, const Vector2<float>& second_point) {	
-    Point player_pos = player->get_box_rect().get_pos();
+    Point player_pos = player->get_position();
     
     SDL_RenderDrawLine(renderer,
                        first_point.x_ - player_pos.x_ + WINDOW_WIDTH/2,

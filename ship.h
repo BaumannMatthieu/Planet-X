@@ -8,7 +8,8 @@
 #include "missile_handler.h"
 
 class Ship : public SpriteEntity,
-             public Movable {
+             public Movable,
+             public std::enable_shared_from_this<Ship> {
 	public:
 		Ship(const Rectangle& box);
 		virtual ~Ship();
@@ -16,13 +17,19 @@ class Ship : public SpriteEntity,
 		void move();
 		virtual void update();
         
+        void take_damage(const uint8_t damage);
+
         virtual bool is_player() const;
+
+        bool isShip() const;
+        bool isDead() const;
     
     protected:
         MissileHandlerPtr missile_handler;
-	private:
-		uint8_t life_;	
+        uint8_t damage_;
 
+    private:
+		int16_t life_;	
 };
 
 typedef std::shared_ptr<Ship> ShipPtr;

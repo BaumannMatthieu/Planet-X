@@ -12,7 +12,7 @@ QuadtreeHandler::~QuadtreeHandler() {
 }
 
 
-void QuadtreeHandler::update(const std::vector<CollisablePtr>& collisables) {
+void QuadtreeHandler::update(const std::set<EntityPtr>& collisables) {
     quadtree_.reset();
     quads_.clear();
 
@@ -42,6 +42,21 @@ void QuadtreeHandler::update(const CollisablePtr collisable_ptr) {
     quadtree_->insert(collisable_ptr, quads_, 0);
 }
  
+void QuadtreeHandler::detect_collisions() const {
+    for(auto& collision : quads_) {
+        CollisablePtr first = collision.first;
+        if(first->isVertice()) {
+            for(auto& quadtree : collision.second) {
+                for(auto& second : quadtree->get_elements(first)) {
+                    if(second->isBox()) {
+                        Collisable::vertice_box_collision(first, second); 
+                    }
+                }
+            }
+        }
+    }
+}
+
 QuadtreePtr QuadtreeHandler::get_quadtree() const {
     return quadtree_;
 }

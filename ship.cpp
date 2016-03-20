@@ -20,6 +20,10 @@ Ship::~Ship() {
 }
 
 void Ship::update() {
+    if(isDead()) {
+        scene_.delete_entity(shared_from_this());
+    }
+
     Math::truncate(force_, max_force_);
 	
 	acceleration_ = force_/mass_;
@@ -28,11 +32,23 @@ void Ship::update() {
 	move();
 }
 
+void Ship::take_damage(const uint8_t damage) {
+    life_ -= damage; 
+}
+
 void Ship::move() {
-    rect_.translate(velocity_);
-    center_mass_ = center_mass_ + velocity_;
+    box_.rect_.translate(velocity_);
+    box_.center_mass_ = box_.center_mass_ + velocity_;
 }
 
 bool Ship::is_player() const {
     return false;
+}
+
+bool Ship::isShip() const {
+    return true;
+}
+
+bool Ship::isDead() const {
+    return (life_ <= 0);
 }

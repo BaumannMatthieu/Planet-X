@@ -2,6 +2,7 @@
 #define __QUADTREE_HANDLER_H__
 
 #include "collisable.h"
+#include "entity.h"
 #include "quadtree.h"
 #include <vector>
 
@@ -15,7 +16,8 @@ class QuadtreeHandler {
         void insert(const CollisablePtr collisable_ptr);
         void update(const CollisablePtr collisable_ptr);
 
-        void update(const std::vector<CollisablePtr>& collisables);
+        void update(const std::set<EntityPtr>& collisables);
+        void detect_collisions() const;
 
         QuadtreePtr get_quadtree() const;
 

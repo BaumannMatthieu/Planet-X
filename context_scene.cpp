@@ -15,22 +15,19 @@ ContextScene::ContextScene() {
 	std::srand(std::time(0));
     
     player = std::make_shared<Player>();
-	entitys_.push_back(player);
-	collisables_.push_back(player);
+	entitys_.insert(player);
     
     for(unsigned int i = 0; i < 5; i++) {
         Rectangle box(Vector2<float>(rand()%WINDOW_WIDTH, rand()%WINDOW_HEIGHT), 20.f, 20.f);
         BlasterPtr blaster = std::make_shared<Blaster>(box);
 
-        entitys_.push_back(blaster);
-        collisables_.push_back(blaster);
+        entitys_.insert(blaster);
     }
 
 	SunPtr sun = std::make_shared<Sun>();
-	entitys_.push_back(sun);
-	collisables_.push_back(sun);
+	entitys_.insert(sun);
     
-    for(auto& collisable : collisables_) {
+    for(auto& collisable : entitys_) {
         quadtree_handler_.insert(collisable);
     }
 }
@@ -42,10 +39,12 @@ ContextScene::~ContextScene() {
 void ContextScene::update() {
     update_entitys_content();
     for(auto& entity : entitys_) {
-            entity->update();
+        entity->update();
     }
     
-    quadtree_handler_.update(collisables_);
+    quadtree_handler_.update(entitys_);
+
+    quadtree_handler_.detect_collisions();
 }
 void ContextScene::draw(SDL_Renderer* renderer) {
     for(auto& entity : entitys_) {
@@ -54,23 +53,27 @@ void ContextScene::draw(SDL_Renderer* renderer) {
     quadtree_handler_.get_quadtree()->draw(renderer);
 }
 
-void ContextScene::add_entity(RenderablePtr entity) {
+void ContextScene::add_entity(EntityPtr entity) {
     add_entitys_.push(entity);
 }
 
+void ContextScene::delete_entity(EntityPtr entity) {
+    entitys_.erase(entity);
+}
+/*
 void ContextScene::add_collisable(CollisablePtr collisable) {
     add_collisables_.push(collisable);
 }
-
+*/
 void ContextScene::update_entitys_content() {
     while(!add_entitys_.empty()) {
-        entitys_.push_back(add_entitys_.front());
+        entitys_.insert(add_entitys_.front());
         add_entitys_.pop();
     }
     
-    while(!add_collisables_.empty()) {
+  /*  while(!add_collisables_.empty()) {
         collisables_.push_back(add_collisables_.front());
         quadtree_handler_.insert(add_collisables_.front());
         add_collisables_.pop();
-    }
+    }*/
 }

@@ -37,6 +37,8 @@ class Quadtree : public std::enable_shared_from_this<Quadtree>,
 		void remove(const CollisablePtr element_ptr, std::unordered_map<CollisablePtr, std::set<std::shared_ptr<Quadtree>>>& quads_map);
 			
 		void decrease_num_elements(const CollisablePtr element_ptr);
+
+        std::set<CollisablePtr>& get_elements(const CollisablePtr first);
     
         void update() {
 

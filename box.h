@@ -1,10 +1,9 @@
 #ifndef __BOX_H__
 #define __BOX_H__
 
-#include "collisable.h"
 #include "rectangle.h"
 
-class Box : public Collisable {
+class Box {
     public: 
         Box(const Rectangle& rectangle);
         virtual ~Box();
@@ -12,9 +11,7 @@ class Box : public Collisable {
         const Rectangle& get_box_rect() const;
         const Point& get_position() const;  
         
-        virtual bool compute(const Rectangle& rect) const;
-
-    protected:
+    public:
         Rectangle rect_;
         Point center_mass_;
 };

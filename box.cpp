@@ -17,7 +17,3 @@ const Rectangle& Box::get_box_rect() const {
 const Point& Box::get_position() const {
     return center_mass_;
 }
-
-bool Box::compute(const Rectangle& rect) const {
-    return Rectangle::intersection(rect_, rect);
-}

@@ -10,6 +10,7 @@ extern PlayerPtr player;
 
 Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
 	mass_ = 20;
+    damage_ = 5;
     SDL_Color color_missile = {255, 0, 0, 255};
     missile_handler = std::make_shared<MissileHandler>(color_missile);
     attacking_displacement_ = std::make_shared<CenteredPath>(player->get_position());
@@ -37,7 +38,7 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
 	StatePtr wandering = std::make_shared<State>([this] (const StatePtr current_state) {
 		/* wandering algorithme */
         Point seek_pos(player->get_position());   
-		float distance = Vector2<float>::distance(seek_pos, center_mass_);
+		float distance = Vector2<float>::distance(seek_pos, box_.center_mass_);
 
 		if(distance <= rad_focus_) {
 			current_states_.erase(current_state);
@@ -48,7 +49,7 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
 
 	StatePtr attack_moving = std::make_shared<State>([this] (const StatePtr current_state) {
         Point seek_pos(player->get_position());   
-		float distance = Vector2<float>::distance(seek_pos, center_mass_);
+		float distance = Vector2<float>::distance(seek_pos, box_.center_mass_);
        
         attacking_displacement_->update(seek_pos); 
 
@@ -61,7 +62,7 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
 	});
 	
     StatePtr attacking = std::make_shared<State>([this] (const StatePtr current_state) {
-        missile_handler->cast_missile(center_mass_, player->get_position(), 10.0f);
+        missile_handler->cast_missile(box_.center_mass_, player->get_position(), 10.0f);
     });
 
 

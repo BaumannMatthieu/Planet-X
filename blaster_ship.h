@@ -7,8 +7,7 @@
 #include "centered_path.h"
 
 class Blaster : public Ship,
-                public Scriptable,
-                public std::enable_shared_from_this<Blaster> {
+                public Scriptable {
 	public:
 		Blaster(const Rectangle& box);
 		virtual ~Blaster();

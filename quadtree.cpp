@@ -151,3 +151,6 @@ void Quadtree::remove(const CollisablePtr element_ptr, std::unordered_map<Collis
 	}
 }
 
+std::set<CollisablePtr>& Quadtree::get_elements(CollisablePtr first) {
+    return elements_[first];
+}

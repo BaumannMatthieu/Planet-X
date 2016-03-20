@@ -7,8 +7,7 @@
 #include <memory>
 
 class Shoot : public Missile,
-              public Movable,
-              public Vertice {
+              public Movable {
     public:
         Shoot(const Point& position,
               const Point& focus,
@@ -18,10 +17,18 @@ class Shoot : public Missile,
         
 		void draw(SDL_Renderer* renderer);
 		void update();
+        bool compute(const Rectangle& rect) const;
 
         void move();
+
+        bool isShoot() const;
+        
+        const Point& get_position() const;
+        
+        bool isVertice() const;
     
     private:
+        Vertice vertice_;
         float speed_;
         float length_;
 };
