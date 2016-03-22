@@ -18,17 +18,20 @@ ContextScene::ContextScene() {
     player->init_missile_handler();
 
 	entitys_.insert(player);
+    avoidables_.insert(player);
     
     for(unsigned int i = 0; i < 5; i++) {
-        Rectangle box(Vector2<float>(rand()%WINDOW_WIDTH, rand()%WINDOW_HEIGHT), 20.f, 20.f);
+        Rectangle box(Vector2<float>(rand()%WINDOW_WIDTH, rand()%WINDOW_HEIGHT), 30.f, 30.f);
         BlasterPtr blaster = std::make_shared<Blaster>(box);
         blaster->init_missile_handler();
 
         entitys_.insert(blaster);
+        avoidables_.insert(blaster);
     }
 
 	SunPtr sun = std::make_shared<Sun>();
 	entitys_.insert(sun);
+    avoidables_.insert(sun);
     
     for(auto& collisable : entitys_) {
         quadtree_handler_.insert(collisable);

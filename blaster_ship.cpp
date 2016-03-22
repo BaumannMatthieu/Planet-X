@@ -5,8 +5,10 @@
 #include "shoot.h"
 #include "missile_handler.h"
 #include "player.h"
+#include "context_scene.h"
 
 extern PlayerPtr player;
+extern ContextScene scene_;
 
 Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
 	mass_ = 20;
@@ -19,7 +21,7 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
     Point seek_pos(player->get_position());   
     uint8_t n = 10;
     for(uint8_t i = 0; i < n; i++) {
-        attacking_displacement_->add_point(seek_pos + Point(100.f*std::cos(2*3.14f*i/n), 200.f*std::sin(2*3.14f*i/n)));
+        attacking_displacement_->add_point(seek_pos + Point(300.f*std::cos(2*3.14f*i/n), 300.f*std::sin(2*3.14f*i/n)));
     }
 /*	
     attacking_displacement_.add_point(seek_pos + Point(200.f, 0.f));	    
@@ -45,10 +47,28 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
         }
 	});
 
+	StatePtr obstacle_avoidance = std::make_shared<State>([this] (const StatePtr current_state) {
+        float dynamic_length = velocity_.get_norme()/max_velocity_;
+        Point ahead = box_.center_mass_ + (velocity_/velocity_.get_norme())*dynamic_length;
+        Point ahead_half = box_.center_mass_ + (velocity_/velocity_.get_norme())*dynamic_length*0.5f;
+
+        
+        Point seek_pos(player->get_position());   
+        
+		float distance = Vector2<float>::distance(seek_pos, box_.center_mass_);
+
+		if(distance <= rad_focus_) {
+			current_states_.erase(current_state);
+			current_states_.insert(current_state->get_next_state(State::ATTACK_DISPLACEMENT));
+			current_states_.insert(current_state->get_next_state(State::ATTACKING));
+        }
+	});
+
+
 	StatePtr attack_moving = std::make_shared<State>([this] (const StatePtr current_state) {
         Point seek_pos(player->get_position());   
 		float distance = Vector2<float>::distance(seek_pos, box_.center_mass_);
-       
+         
         attacking_displacement_->update(seek_pos); 
 
         force_ = attacking_displacement_->execute(shared_from_this());

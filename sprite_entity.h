@@ -5,8 +5,10 @@
 #include <SDL2/SDL.h>
 #include "box.h"
 #include "entity.h"
+#include "avoidable.h"
 
-class SpriteEntity : public Entity {
+class SpriteEntity : public Entity,
+                     public Avoidable {
 	public:
 		SpriteEntity(const Rectangle& box);
 		virtual ~SpriteEntity();

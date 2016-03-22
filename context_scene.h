@@ -4,6 +4,7 @@
 #include <queue>
 
 #include "entity.h"
+#include "avoidable.h"
 #include "quadtree_handler.h"
 
 class ContextScene : public Renderable {
@@ -27,6 +28,7 @@ class ContextScene : public Renderable {
         std::queue<RenderablePtr> add_entitys_;
         std::queue<CollisablePtr> add_collisables_;
 */
+        std::set<AvoidablePtr> avoidables_;
         std::set<EntityPtr> entitys_;
         std::queue<EntityPtr> add_entitys_;
 

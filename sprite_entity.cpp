@@ -1,7 +1,7 @@
 #include "sprite_entity.h"
 #include "rectangle.h"
 
-SpriteEntity::SpriteEntity(const Rectangle& box) : box_(box), pos_sprite_(box.get_points().front()) {
+SpriteEntity::SpriteEntity(const Rectangle& box) : Avoidable(box), box_(box), pos_sprite_(box.get_points().front()) {
 
 }
 
