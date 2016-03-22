@@ -62,7 +62,7 @@ class Vector2 {
             Vector2<T> vect(u.x_ - v.x_, u.y_ - v.y_);
             return vect.get_norme();
         }
-
+        
 	public:
 		T x_;
 		T y_;

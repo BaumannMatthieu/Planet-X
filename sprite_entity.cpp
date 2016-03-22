@@ -11,6 +11,7 @@ SpriteEntity::~SpriteEntity() {
 
 void SpriteEntity::draw(SDL_Renderer* renderer) {
     box_.rect_.draw(renderer);
+    circle_.draw(renderer);
 }
 
 bool SpriteEntity::compute(const Rectangle& rect) const {

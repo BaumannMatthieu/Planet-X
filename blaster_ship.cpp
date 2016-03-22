@@ -49,20 +49,20 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
 
 	StatePtr obstacle_avoidance = std::make_shared<State>([this] (const StatePtr current_state) {
         float dynamic_length = velocity_.get_norme()/max_velocity_;
-        Point ahead = box_.center_mass_ + (velocity_/velocity_.get_norme())*dynamic_length;
-        Point ahead_half = box_.center_mass_ + (velocity_/velocity_.get_norme())*dynamic_length*0.5f;
+        Point ahead = box_.center_mass_ + (velocity_/velocity_.get_norme())*dynamic_length*50.0f;
+        Point ahead_half = box_.center_mass_ + (velocity_/velocity_.get_norme())*dynamic_length*25.0f;
 
-        
-        Point seek_pos(player->get_position());   
-        
-		float distance = Vector2<float>::distance(seek_pos, box_.center_mass_);
+        AvoidablePtr obstacle = Avoidable::get_most_threatening_obstacle(shared_from_this(), box_.center_mass_,
+        ahead, ahead_half, scene_.get_obstacles());
 
-		if(distance <= rad_focus_) {
-			current_states_.erase(current_state);
-			current_states_.insert(current_state->get_next_state(State::ATTACK_DISPLACEMENT));
-			current_states_.insert(current_state->get_next_state(State::ATTACKING));
-        }
-	});
+        if(obstacle != nullptr) {
+            Vector2<float> avoidance_force(ahead - obstacle->get_circle().get_pos());
+            avoidance_force.normalize();
+            avoidance_force = avoidance_force*50.0f;  
+        
+            force_ = force_ + avoidance_force;
+        }            
+    });
 
 
 	StatePtr attack_moving = std::make_shared<State>([this] (const StatePtr current_state) {
@@ -71,7 +71,7 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
          
         attacking_displacement_->update(seek_pos); 
 
-        force_ = attacking_displacement_->execute(shared_from_this());
+        force_ = force_ + Movable::compute_arrive_force(box_.center_mass_, seek_pos);//attacking_displacement_->execute(shared_from_this());
         
 		if(distance >= rad_focus_) {
 			current_states_.erase(current_state);
@@ -90,6 +90,7 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
 	attack_moving->set_next_state(State::WANDERING, wandering);
 
 	current_states_.insert(wandering);
+	current_states_.insert(obstacle_avoidance);
 }
 
 void Blaster::init_missile_handler() {
@@ -103,7 +104,6 @@ Blaster::~Blaster() {
 }
 void Blaster::update() {
 	execute();
-    
 
     Ship::update();
 }

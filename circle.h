@@ -3,16 +3,14 @@
 
 #include "primitive.h"
 
-class Circle {
+class Circle : public Primitive {
     public: 
         Circle(const Point& point, const float radius);
         virtual ~Circle();
         
-        const Point& get_position() const;  
         const float get_radius() const;  
         
     public:
-        Point center_mass_;
         float radius_;
 };
 

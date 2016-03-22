@@ -30,6 +30,8 @@ void Ship::update() {
     velocity_ = velocity_ + acceleration_;
     Math::truncate(velocity_, max_velocity_);
 	move();
+
+    force_ = Vector2<float>(0.f, 0.f);
 }
 
 void Ship::take_damage(const uint8_t damage) {
@@ -39,6 +41,8 @@ void Ship::take_damage(const uint8_t damage) {
 void Ship::move() {
     box_.rect_.translate(velocity_);
     box_.center_mass_ = box_.center_mass_ + velocity_;
+
+    circle_.translate(velocity_);  
 }
 
 bool Ship::is_player() const {

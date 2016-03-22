@@ -18,6 +18,7 @@ class ContextScene : public Renderable {
         void add_entity(EntityPtr entity);
         void delete_entity(EntityPtr entity);
   //      void add_collisable(CollisablePtr collisable);
+        const std::set<AvoidablePtr>& get_obstacles() const;
 
     private:
         void update_entitys_content();

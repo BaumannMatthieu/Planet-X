@@ -59,6 +59,10 @@ void ContextScene::draw(SDL_Renderer* renderer) {
     quadtree_handler_.get_quadtree()->draw(renderer);
 }
 
+const std::set<AvoidablePtr>& ContextScene::get_obstacles() const {
+    return avoidables_; 
+}   
+
 void ContextScene::add_entity(EntityPtr entity) {
     add_entitys_.push(entity);
 }

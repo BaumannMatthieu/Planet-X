@@ -16,7 +16,7 @@ class Avoidable {
 
         const Circle& get_circle() const;
 
-        static const AvoidablePtr get_most_threatening_obstacle(const std::set<AvoidablePtr>& avoidables);
+        static const AvoidablePtr get_most_threatening_obstacle(const AvoidablePtr& this_entity, const Point& position, const Point& ahead, const Point& ahead2, const std::set<AvoidablePtr>& avoidables);
     
     protected:
         Circle circle_;

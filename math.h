@@ -31,6 +31,11 @@ namespace Math {
 
     inline float norme(const Vector2<float>& vect) {
         return vect.get_norme();
+    }
+
+    inline float distance(const Point& p1, const Point& p2) {
+        Vector2<float> vect(p1 - p2);
+        return vect.get_norme();
     }   
 
     inline const Vector2<float>& get_farthest_point(const Point& point, const std::vector<Vector2<float>>& points) {
