@@ -35,7 +35,7 @@ void Ship::update() {
 }
 
 void Ship::take_damage(const uint8_t damage) {
-    life_ -= damage; 
+//    life_ -= damage; 
 }
 
 void Ship::move() {

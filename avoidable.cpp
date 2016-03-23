@@ -22,12 +22,13 @@ const AvoidablePtr Avoidable::get_most_threatening_obstacle(const AvoidablePtr& 
         if(this_entity != avoidable) {
             const Circle circle = avoidable->get_circle();
             float radius = circle.get_radius();
+            float this_radius = this_entity->get_circle().get_radius();
             Point center = circle.get_pos();
 
-            if(Math::distance(ahead, center) <= radius || Math::distance(ahead2, center) <= radius) {
+            if(Math::distance(ahead, center) <= radius + this_radius || Math::distance(ahead2, center) <= radius + this_radius) {
                 
                 if(most_threatening != nullptr) {
-                    if(Math::distance(center, position) <= Math::distance(most_threatening->get_circle().get_pos(), position)) {
+                    if(Math::distance(center, position) >= Math::distance(most_threatening->get_circle().get_pos(), position)) {
                         most_threatening = avoidable;
                         continue;
                     }
