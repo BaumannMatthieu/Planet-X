@@ -67,12 +67,15 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(800) {
 
 
 	StatePtr attack_moving = std::make_shared<State>([this] (const StatePtr current_state) {
-        Point seek_pos(player->get_position());   
+        Vector2<float> vect_player_to_ship(box_.center_mass_ - player->get_position());
+        vect_player_to_ship.normalize();
+
+        Point seek_pos(player->get_position() + vect_player_to_ship*rad_focus_*0.5f);
 		float distance = Vector2<float>::distance(seek_pos, box_.center_mass_);
          
-        attacking_displacement_->update(seek_pos); 
-
-        force_ = force_ + Movable::compute_arrive_force(box_.center_mass_, seek_pos);//attacking_displacement_->execute(shared_from_this());
+        //attacking_displacement_->update(seek_pos); 
+        force_ = force_ + Movable::compute_arrive_force(box_.center_mass_, seek_pos);
+        //attacking_displacement_->execute(shared_from_this());
         
 		if(distance >= rad_focus_) {
 			current_states_.erase(current_state);
