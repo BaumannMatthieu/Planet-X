@@ -11,6 +11,7 @@ extern ContextScene scene_;
 Ship::Ship(const Rectangle& box) : SpriteEntity(box), life_(100) {
 	mass_ = 20;
     max_velocity_ = 10.0f;
+    min_velocity_ = 1.0f;
     max_force_ = 15; 
 	velocity_ = Vector2<float>(-0.1f, -0.1f);
 }
@@ -28,8 +29,10 @@ void Ship::update() {
 	
 	acceleration_ = force_/mass_;
     velocity_ = velocity_ + acceleration_;
-    Math::truncate(velocity_, max_velocity_);
-	move();
+    if(velocity_.get_norme() >= min_velocity_) {
+        Math::truncate(velocity_, max_velocity_);
+	    move();
+    }
 
     force_ = Vector2<float>(0.f, 0.f);
 }

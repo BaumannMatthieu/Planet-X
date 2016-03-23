@@ -26,10 +26,9 @@ const AvoidablePtr Avoidable::get_most_threatening_obstacle(const AvoidablePtr& 
             float this_radius = this_entity->get_circle().get_radius();
             Point center = circle.get_pos();
 
-            if(Math::distance(ahead, center) <= radius + this_radius || Math::distance(ahead2, center) <= radius + this_radius) {
-                
+            if(Math::distance(ahead, center) <= radius + this_radius || Math::distance(ahead2, center) <= radius + this_radius||Math::distance(position, center) <= radius + this_radius) {
                 if(most_threatening != nullptr) {
-                    if(Math::distance(center, position) >= Math::distance(most_threatening->get_circle().get_pos(), position) && radius >= bigger_radius_threatening) {
+                    if(Math::distance(center, position) > Math::distance(most_threatening->get_circle().get_pos(), position)/* && radius > bigger_radius_threatening*/) {
                         most_threatening = avoidable;
                         bigger_radius_threatening = radius;
                         continue;

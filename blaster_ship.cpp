@@ -10,12 +10,13 @@
 extern PlayerPtr player;
 extern ContextScene scene_;
 
-Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
+Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(800) {
 	mass_ = 20;
     damage_ = 5;
     attacking_displacement_ = std::make_shared<CenteredPath>(player->get_position());
     max_velocity_ = 10.0f;
-    max_force_ = 15; 
+    max_force_ = 15.f; 
+    max_avoidance_force_ = 25.f;
 	velocity_ = Vector2<float>(-0.1f, -0.1f);
 	
     Point seek_pos(player->get_position());   
@@ -49,8 +50,8 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
 
 	StatePtr obstacle_avoidance = std::make_shared<State>([this] (const StatePtr current_state) {
         float dynamic_length = velocity_.get_norme()/max_velocity_;
-        Point ahead = box_.center_mass_ + (velocity_/velocity_.get_norme())*dynamic_length*50.0f;
-        Point ahead_half = box_.center_mass_ + (velocity_/velocity_.get_norme())*dynamic_length*25.0f;
+        Point ahead = box_.center_mass_ + (velocity_/velocity_.get_norme())*dynamic_length*50.f;
+        Point ahead_half = box_.center_mass_ + (velocity_/velocity_.get_norme())*dynamic_length*25.5f;
 
         AvoidablePtr obstacle = Avoidable::get_most_threatening_obstacle(shared_from_this(), box_.center_mass_,
         ahead, ahead_half, scene_.get_obstacles());
@@ -58,7 +59,7 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(500) {
         if(obstacle != nullptr) {
             Vector2<float> avoidance_force(ahead - obstacle->get_circle().get_pos());
             avoidance_force.normalize();
-            avoidance_force = avoidance_force*50.0f;  
+            avoidance_force = avoidance_force*max_avoidance_force_;  
         
             force_ = force_ + avoidance_force;
         }            

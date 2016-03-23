@@ -18,6 +18,8 @@ class Blaster : public Ship,
 	private:
        	float rad_focus_;
         CenteredPathPtr attacking_displacement_;
+
+        float max_avoidance_force_;
 };
 
 typedef std::shared_ptr<Blaster> BlasterPtr;

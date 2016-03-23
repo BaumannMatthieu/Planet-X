@@ -8,7 +8,7 @@ extern EventHandler event_handler;
 
 Player::Player() : Ship(Rectangle(Vector2<float>(WINDOW_WIDTH/2.f - 10.f, WINDOW_HEIGHT/2.f - 10.f), 20.f, 20.f)), stopped_(true), k_(0.5f) {
     mass_ = 5.0f;
-    damage_ = 20;
+    damage_ = 80;
     dir_ = box_.center_mass_;
 	register_events();
 }
