@@ -38,6 +38,8 @@ class Scriptable {
 
 		void execute() const;
 
+        void set_current_states(const std::set<StatePtr> current_states);
+
 	protected:
 		std::set<StatePtr> current_states_;
 };

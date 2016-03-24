@@ -2,24 +2,17 @@
 #define __BLASTER_SHIP_H__
 
 #include <memory>
-#include "ship.h"
-#include "scriptable.h"
+#include "enemy_ship.h"
 #include "centered_path.h"
 
-class Blaster : public Ship,
-                public Scriptable {
+class Blaster : public EnemyShip {
 	public:
 		Blaster(const Rectangle& box);
 		virtual ~Blaster();
         
-        void init_missile_handler();
 
-		void update();
-	private:
-       	float rad_focus_;
+    private:
         CenteredPathPtr attacking_displacement_;
-
-        float max_avoidance_force_;
 };
 
 typedef std::shared_ptr<Blaster> BlasterPtr;

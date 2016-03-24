@@ -37,3 +37,15 @@ const Vector2<float> Movable::compute_circular_displacement_force(const Point& s
    	return Vector2<float>(-radial_vector.y_, radial_vector.x_);
 }
 
+const Vector2<float>& Movable::get_velocity() const {
+    return velocity_;
+}
+
+const float Movable::get_max_velocity() const {
+    return max_velocity_;
+}
+
+
+void Movable::add_force(const Vector2<float>& delta_force) {
+    force_ = force_ + delta_force;
+}

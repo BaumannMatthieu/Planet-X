@@ -10,14 +10,15 @@
 extern PlayerPtr player;
 extern ContextScene scene_;
 
-Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(800) {
+Blaster::Blaster(const Rectangle& box) : EnemyShip(box) {
 	mass_ = 20;
     damage_ = 5;
     attacking_displacement_ = std::make_shared<CenteredPath>(player->get_position());
     max_velocity_ = 10.0f;
     max_force_ = 15.f; 
     max_avoidance_force_ = 25.f;
-	velocity_ = Vector2<float>(-0.1f, -0.1f);
+    rad_focus_ = 800;
+	velocity_ = Vector2<float>(-1.f, 1.f);
 	
     Point seek_pos(player->get_position());   
     uint8_t n = 10;
@@ -39,13 +40,13 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(800) {
 	StatePtr wandering = std::make_shared<State>([this] (const StatePtr current_state) {
 		/* wandering algorithme */
         Point seek_pos(player->get_position());   
-		float distance = Vector2<float>::distance(seek_pos, box_.center_mass_);
+/*		float distance = Vector2<float>::distance(seek_pos, box_.center_mass_);
 
 		if(distance <= rad_focus_) {
 			current_states_.erase(current_state);
 			current_states_.insert(current_state->get_next_state(State::ATTACK_DISPLACEMENT));
 			current_states_.insert(current_state->get_next_state(State::ATTACKING));
-        }
+        }*/
 	});
 
 	StatePtr obstacle_avoidance = std::make_shared<State>([this] (const StatePtr current_state) {
@@ -64,7 +65,6 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(800) {
             force_ = force_ + avoidance_force;
         }            
     });
-
 
 	StatePtr attack_moving = std::make_shared<State>([this] (const StatePtr current_state) {
         Vector2<float> vect_player_to_ship(box_.center_mass_ - player->get_position());
@@ -97,18 +97,7 @@ Blaster::Blaster(const Rectangle& box) : Ship(box), rad_focus_(800) {
 	current_states_.insert(obstacle_avoidance);
 }
 
-void Blaster::init_missile_handler() {
-    SDL_Color color_missile = {255, 0, 0, 255};
-    std::weak_ptr<Ship> weak_from_this(shared_from_this());
-    missile_handler = std::make_shared<MissileHandler>(weak_from_this, color_missile);
-}
-
 Blaster::~Blaster() {
     
-}
-void Blaster::update() {
-	execute();
-
-    Ship::update();
 }
 

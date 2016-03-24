@@ -20,14 +20,25 @@ ContextScene::ContextScene() {
 	entitys_.insert(player);
     avoidables_.insert(player);
     
-    for(unsigned int i = 0; i < 15; i++) {
+    std::set<EnemyShipPtr> group_ships;
+    EnemyShipPtr leader;
+
+    for(unsigned int i = 0; i < 7; i++) {
         Rectangle box(Vector2<float>(rand()%WINDOW_WIDTH, rand()%WINDOW_HEIGHT), 30.f, 30.f);
         BlasterPtr blaster = std::make_shared<Blaster>(box);
         blaster->init_missile_handler();
 
         entitys_.insert(blaster);
         avoidables_.insert(blaster);
+
+        if(i >= 1 && i < 7) {
+            group_ships.insert(blaster);
+        } else if(i == 0) {
+            leader = blaster;
+        }
     }
+
+    group_ = std::make_shared<GroupShips>(group_ships, leader);
 
 	SunPtr sun = std::make_shared<Sun>();
 	entitys_.insert(sun);

@@ -35,3 +35,7 @@ void Scriptable::execute() const {
 	}	
 }
 
+void Scriptable::set_current_states(const std::set<StatePtr> current_states) {
+    current_states_.clear();
+    current_states_ = current_states;
+}

@@ -13,6 +13,11 @@ class Movable {
         const Vector2<float> compute_flee_force(const Point& source, const Point& destination) const;
         const Vector2<float> compute_circular_displacement_force(const Point& source, const Point& destination) const;
 
+        const Vector2<float>& get_velocity() const;
+        const float get_max_velocity() const;
+
+        void add_force(const Vector2<float>& delta_force);
+
     protected:
 		Vector2<float> force_;
 		Vector2<float> acceleration_;

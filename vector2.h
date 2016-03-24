@@ -48,6 +48,10 @@ class Vector2 {
 			return Vector2<T>(x_/lambda, y_/lambda);
 		}
 
+        inline const Vector2<T> get_normal() const {
+            return Vector2<T>(-y_, x_);
+        }
+
         const T get_norme() const {
 			return std::sqrt(x_*x_ + y_*y_);
         }
