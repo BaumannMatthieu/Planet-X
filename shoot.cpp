@@ -17,7 +17,7 @@ void Shoot::draw(SDL_Renderer* renderer) {
     Point back_light_point(vertice_.center_mass_ - (velocity_/velocity_.get_norme())*length_);
 
     SDL_SetRenderDrawColor(renderer, color_.r, color_.g, color_.b, color_.a);
-    Renderable::draw_line(renderer, vertice_.center_mass_, back_light_point);
+//    Renderable::draw_line(renderer, vertice_.center_mass_, back_light_point);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 }
 

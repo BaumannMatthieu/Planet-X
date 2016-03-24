@@ -9,6 +9,8 @@ class Blaster : public EnemyShip {
 	public:
 		Blaster(const Point& position);
 		virtual ~Blaster();
+        
+        void cast_missile(const Point& focus) const;
 
     private:
         CenteredPathPtr attacking_displacement_;

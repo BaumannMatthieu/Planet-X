@@ -18,7 +18,6 @@ class EnemyShip : public Ship,
         void update();
 	protected:
        	float rad_focus_;
-
         float max_avoidance_force_;
 };
 

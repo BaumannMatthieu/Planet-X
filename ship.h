@@ -25,6 +25,8 @@ class Ship : public SpriteEntity,
 
         bool isShip() const;
         bool isDead() const;
+
+        virtual void cast_missile(const Point& focus) const = 0;
     
     protected:
         MissileHandlerPtr missile_handler;

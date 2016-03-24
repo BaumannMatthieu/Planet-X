@@ -18,6 +18,7 @@ class Player : public Ship,
     
         bool is_player() const;
 
+        void cast_missile(const Point& focus) const;
     private:
         bool stopped_;
         float k_;
