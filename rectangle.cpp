@@ -1,4 +1,5 @@
 #include "rectangle.h"
+#include "math.h"
 #include <iostream>
 
 Rectangle::Rectangle() {
@@ -35,14 +36,26 @@ bool Rectangle::intersection(const Rectangle& r1, const Rectangle& r2) {
 }
 
 bool Rectangle::intersection(const Point& p, const Rectangle& r) {
-       if(p.x_ > r.pos_.x_ && 
-          p.x_ < r.pos_.x_ + r.w_ && 
-          p.y_ > r.pos_.y_ &&
-          p.y_ < r.pos_.y_ + r.h_) {
+       if(p.x_ >= r.pos_.x_ && 
+          p.x_ <= r.pos_.x_ + r.w_ && 
+          p.y_ >= r.pos_.y_ &&
+          p.y_ <= r.pos_.y_ + r.h_) {
             return true;
         }
 
         return false;
+}
+
+bool Rectangle::intersection(const Point& p1, const Point& p2, const Rectangle& r) {
+    for(unsigned int i = 0; i < r.points_.size() - 1; i++) {
+        if(Math::intersect_segment(p1, p2, r.points_[i], r.points_[i + 1])) {
+            return true;
+        }
+    }
+    if(Math::intersect_segment(p1, p2, r.points_.back(), r.points_.front())) {
+        return true;
+    }
+    return false; 
 }
 
 Rectangle::Rectangle(const Rectangle& rect) {

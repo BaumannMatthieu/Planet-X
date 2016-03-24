@@ -34,7 +34,7 @@ void Collisable::vertice_box_collision(const CollisablePtr first, const Collisab
                 return;
             }
         }
-        if(Rectangle::intersection(shoot->get_position(), ship->get_box())) {
+        if(Rectangle::intersection(shoot->get_position(), shoot->get_back_position(), ship->get_box())) {
             ship->take_damage(shoot->get_damage());        
         }
     }

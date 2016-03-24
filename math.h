@@ -50,6 +50,28 @@ namespace Math {
         }
         return points[k];        
     } 
+
+    inline bool intersect_segment(const Point& a1, const Point& a2,
+                                  const Point& b1, const Point& b2) {
+        Vector2<float> r(a2 - a1);
+        Vector2<float> s(b2 - b1);
+
+        float r_cross_s = r^s;
+
+        if(r_cross_s == 0.f) {
+            return false;
+        }
+
+        Vector2<float> c(b1 - a1);
+        float t = c^s/(r_cross_s);
+        float u = c^r/(r_cross_s);
+
+        if(t >= 0 && t <= 1 && u >= 0 && u <= 1) {
+            return true;
+        }
+
+        return false;
+    }
 };
 
 #endif

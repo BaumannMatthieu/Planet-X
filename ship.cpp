@@ -9,7 +9,7 @@
 extern ContextScene scene_;
 
 Ship::Ship(const Rectangle& box) : SpriteEntity(box), life_(100) {
-	mass_ = 20;
+	mass_ = 7;
     max_velocity_ = 10.0f;
     min_velocity_ = 1.0f;
     max_force_ = 15; 
@@ -38,7 +38,7 @@ void Ship::update() {
 }
 
 void Ship::take_damage(const uint8_t damage) {
-//    life_ -= damage; 
+    life_ -= damage; 
 }
 
 void Ship::move() {

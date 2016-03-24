@@ -14,7 +14,7 @@ Blaster::Blaster(const Point& position) : EnemyShip(Rectangle(position, 30.f, 30
 	mass_ = 7;
     damage_ = 5;
     attacking_displacement_ = std::make_shared<CenteredPath>(player->get_position());
-    max_velocity_ = 10.0f;
+    max_velocity_ = 7.0f;
     max_force_ = 15.f; 
     max_avoidance_force_ = 25.f;
     rad_focus_ = 800;

@@ -25,13 +25,15 @@ class Shoot : public Missile,
         bool isShoot() const;
         
         const Point& get_position() const;
+        const Point& get_back_position() const;
         
         bool isVertice() const;
     
     private:
-        Vertice vertice_;
         float speed_;
         float length_;
+        Vertice front_;
+        Vertice back_;
 };
 
 typedef std::shared_ptr<Shoot> ShootPtr;

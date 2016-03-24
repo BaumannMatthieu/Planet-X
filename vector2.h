@@ -43,7 +43,11 @@ class Vector2 {
 		inline const T& operator*(const Vector2<T>& vector) const {
 			return x_*vector.x_ + y_*vector.y_;
 		}
-		
+	
+		inline const T operator^(const Vector2<T>& vector) const {
+			return x_*vector.y_ - y_*vector.x_;
+		}
+	
 		inline const Vector2<T> operator/(const T& lambda) const {
 			return Vector2<T>(x_/lambda, y_/lambda);
 		}
