@@ -10,7 +10,7 @@
 extern PlayerPtr player;
 extern ContextScene scene_;
 
-Blaster::Blaster(const Rectangle& box) : EnemyShip(box) {
+Blaster::Blaster(const Point& position) : EnemyShip(Rectangle(position, 30.f, 30.f)) {
 	mass_ = 20;
     damage_ = 5;
     attacking_displacement_ = std::make_shared<CenteredPath>(player->get_position());

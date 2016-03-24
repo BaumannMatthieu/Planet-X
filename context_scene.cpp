@@ -24,8 +24,7 @@ ContextScene::ContextScene() {
     EnemyShipPtr leader;
 
     for(unsigned int i = 0; i < 7; i++) {
-        Rectangle box(Vector2<float>(rand()%WINDOW_WIDTH, rand()%WINDOW_HEIGHT), 30.f, 30.f);
-        BlasterPtr blaster = std::make_shared<Blaster>(box);
+        BlasterPtr blaster = std::make_shared<Blaster>(Point(rand()%WINDOW_WIDTH, rand()%WINDOW_HEIGHT));
         blaster->init_missile_handler();
 
         entitys_.insert(blaster);

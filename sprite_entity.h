@@ -19,6 +19,8 @@ class SpriteEntity : public Entity,
         bool compute(const Rectangle& rect) const;
         
         const Point& get_position() const;
+        void set_position(const Point& position);
+    
         const Rectangle& get_box() const;
 
         bool isBox() const;

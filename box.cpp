@@ -14,6 +14,11 @@ const Rectangle& Box::get_box_rect() const {
     return rect_;
 }
 
+void Box::set_position(const Point& center_mass) {
+    rect_.translate(center_mass - center_mass_); 
+    center_mass_ = center_mass;
+}
+
 const Point& Box::get_position() const {
     return center_mass_;
 }

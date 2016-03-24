@@ -10,10 +10,27 @@ GroupShips::GroupShips(EnemyShipPtr leader) : leader_(leader) {
 
 }
 
+const Point GroupShips::get_square_formation(const uint8_t id) const {
+    Point leader_pos = leader_->get_position();
+    Vector2<float> leader_velocity = leader_->get_velocity();
+    leader_velocity.normalize();
+
+    Vector2<float> leader_velocity_t = leader_velocity.get_normal();
+
+    Vector2<float> base_group = -leader_velocity;
+    base_group = base_group*50.f;
+
+    return Point(leader_pos + base_group + leader_velocity_t*50.f
+                       - leader_velocity*(id/2)*75.f - leader_velocity_t*(id%2)*100.f);
+
+}
+
 GroupShips::GroupShips(const std::set<EnemyShipPtr> ships, const EnemyShipPtr leader) : ships_(ships), leader_(leader) {
     unsigned int i = 0; 
     for(auto& ship : ships_) {
         std::set<StatePtr> states_follower_ship;
+
+        ship->set_position(get_square_formation(i));
 
         StatePtr obstacle_avoidance = std::make_shared<State>([ship] (const StatePtr current_state) {
             Vector2<float> ship_velocity = ship->get_velocity();
@@ -34,20 +51,7 @@ GroupShips::GroupShips(const std::set<EnemyShipPtr> ships, const EnemyShipPtr le
         });
 
         StatePtr follow_leader = std::make_shared<State>([ship, this, i] (const StatePtr current_state) {
-            Point leader_pos = leader_->get_position();
-            Vector2<float> leader_velocity = leader_->get_velocity();
-            leader_velocity.normalize();
-
-            Vector2<float> leader_velocity_t = leader_velocity.get_normal();
-
-            Vector2<float> base_group = -leader_velocity;
-            base_group = base_group*50.f;
-
-    
-            Point seek_pos(leader_pos + base_group + leader_velocity_t*50.f
-                           - leader_velocity*(i/2)*75.f - leader_velocity_t*(i%2)*100.f);
- 
-            ship->add_force(ship->compute_arrive_force(ship->get_position(), seek_pos));
+            ship->add_force(ship->compute_arrive_force(ship->get_position(), get_square_formation(i)));
         });
        /* 
         StatePtr attacking = std::make_shared<State>([ship] (const StatePtr current_state) {

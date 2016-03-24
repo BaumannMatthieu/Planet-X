@@ -7,9 +7,8 @@
 
 class Blaster : public EnemyShip {
 	public:
-		Blaster(const Rectangle& box);
+		Blaster(const Point& position);
 		virtual ~Blaster();
-        
 
     private:
         CenteredPathPtr attacking_displacement_;

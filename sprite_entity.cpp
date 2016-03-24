@@ -29,3 +29,8 @@ const Rectangle& SpriteEntity::get_box() const {
 bool SpriteEntity::isBox() const {
     return true;
 }
+
+void SpriteEntity::set_position(const Point& position) {
+    circle_.translate(position - box_.center_mass_); 
+    box_.set_position(position);
+}

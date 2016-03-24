@@ -12,7 +12,10 @@ class GroupShips {
         virtual ~GroupShips();
 
         void add_ship(EnemyShipPtr ship);
-        
+    
+    private:
+        const Point get_square_formation(const uint8_t id) const;
+    
     private:
         std::set<EnemyShipPtr> ships_;
         EnemyShipPtr leader_;

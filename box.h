@@ -10,6 +10,7 @@ class Box {
         
         const Rectangle& get_box_rect() const;
         const Point& get_position() const;  
+        void set_position(const Point& center_mass);
         
     public:
         Rectangle rect_;
