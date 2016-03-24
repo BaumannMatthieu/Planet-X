@@ -11,7 +11,7 @@ class Shoot : public Missile,
     public:
         Shoot(const std::weak_ptr<Ship> caster,
               const Point& position,
-              const Point& focus,
+              const Vector2<float>& direction,
               const float speed,
               const SDL_Color& color);
         virtual ~Shoot();
@@ -30,8 +30,11 @@ class Shoot : public Missile,
         bool isVertice() const;
     
     private:
+        Vector2<float> direction_;
+
         float speed_;
         float length_;
+
         Vertice front_;
         Vertice back_;
 };

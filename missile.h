@@ -8,7 +8,7 @@ class Ship;
 
 class Missile : public Entity {
     public:
-        Missile(const std::weak_ptr<Ship> caster, const Point& focus, const uint8_t degats, const SDL_Color& color);
+        Missile(const std::weak_ptr<Ship> caster, const uint8_t degats, const SDL_Color& color);
         virtual ~Missile();
         
 		virtual void draw(SDL_Renderer* renderer) = 0;
@@ -26,8 +26,6 @@ class Missile : public Entity {
         uint8_t degats_;
                 
         SDL_Color color_;
-
-        Point focus_;
 };
 
 #endif

@@ -83,14 +83,14 @@ void Player::register_events() {
     event_handler.add(SDL_MOUSEBUTTONDOWN, [this] (const EventData& event_data) {
         const Uint32 mouse_bitmask = event_data.get_mouse_bitmask();
         if(mouse_bitmask & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-            cast_missile(focus_);
+            cast_missile(focus_ - box_.center_mass_);
         }
 	});
 }
 
 
-void Player::cast_missile(const Point& focus) const {
-    missile_handler->cast_missile(box_.center_mass_, focus, 20.f); 
+void Player::cast_missile(const Vector2<float>& direction) const {
+    missile_handler->cast_missile(box_.center_mass_, direction, 20.f); 
 }
 
 bool Player::is_player() const {

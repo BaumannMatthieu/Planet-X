@@ -10,7 +10,7 @@ class Blaster : public EnemyShip {
 		Blaster(const Point& position);
 		virtual ~Blaster();
         
-        void cast_missile(const Point& focus) const;
+        void cast_missile(const Vector2<float>& direction) const;
 
     private:
         CenteredPathPtr attacking_displacement_;

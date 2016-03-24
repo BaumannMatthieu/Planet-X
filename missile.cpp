@@ -1,7 +1,8 @@
 #include "missile.h"
 #include "vector2.h"
 
-Missile::Missile(const std::weak_ptr<Ship> caster, const Point& focus, const uint8_t degats, const SDL_Color& color) : caster_(caster), degats_(degats), color_(color), focus_(focus) {
+Missile::Missile(const std::weak_ptr<Ship> caster, const uint8_t degats, const SDL_Color& color) : caster_(caster), degats_(degats), color_(color) {
+
 }
 
 bool Missile::is_castable(Uint32& last_cast_time, const Uint32 cooldown) {

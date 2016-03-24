@@ -84,7 +84,7 @@ Blaster::Blaster(const Point& position) : EnemyShip(Rectangle(position, 30.f, 30
 	});
 	
     StatePtr attacking = std::make_shared<State>(State::ATTACKING, [this] (const StatePtr current_state) {
-        cast_missile(player->get_position());
+        cast_missile(player->get_position() - box_.center_mass_);
     });
 
 
@@ -97,8 +97,8 @@ Blaster::Blaster(const Point& position) : EnemyShip(Rectangle(position, 30.f, 30
 	current_states_.insert(obstacle_avoidance);
 }
 
-void Blaster::cast_missile(const Point& focus) const {
-    missile_handler->cast_missile(box_.center_mass_, focus, 10.0f);
+void Blaster::cast_missile(const Vector2<float>& direction) const {
+    missile_handler->cast_missile(box_.center_mass_, direction, 10.0f);
 }
 
 Blaster::~Blaster() {

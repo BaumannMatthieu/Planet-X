@@ -62,7 +62,7 @@ GroupShips::GroupShips(const std::set<EnemyShipPtr> ships, const EnemyShipPtr le
         });
         
         StatePtr attacking = std::make_shared<State>(State::ATTACKING, [ship, this] (const StatePtr current_state) {
-                ship->cast_missile(player->get_position());
+                ship->cast_missile(player->get_position() - leader_->get_position());
                 if(!leader_->is_current_state(State::ATTACKING)) {
                     ship->erase_state(current_state);
                 }
