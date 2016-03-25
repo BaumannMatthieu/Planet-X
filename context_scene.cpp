@@ -21,11 +21,10 @@ ContextScene::ContextScene() {
     avoidables_.insert(player);
     life_bars_ui_.insert(std::make_shared<LifeUi>(player));    
 
-
     std::set<EnemyShipPtr> group_ships;
     EnemyShipPtr leader;
 
-    for(unsigned int i = 0; i < 7; i++) {
+    for(unsigned int i = 0; i <= 10; i++) {
         BlasterPtr blaster = std::make_shared<Blaster>(Point(rand()%WINDOW_WIDTH, rand()%WINDOW_HEIGHT));
         blaster->init_missile_handler();
 
@@ -33,14 +32,20 @@ ContextScene::ContextScene() {
         avoidables_.insert(blaster);
         life_bars_ui_.insert(std::make_shared<LifeUi>(blaster));    
 
-        if(i >= 1 && i < 7) {
+        if(i%5 >= 1 && i%5 < 5) {
             group_ships.insert(blaster);
-        } else if(i == 0) {
+        }
+
+        if(i%5==0 && i > 0) {
+            groups_.insert(std::make_shared<GroupShips>(group_ships, leader));
+            group_ships.clear();
+        }
+        
+        if(i%5 == 0) {
             leader = blaster;
         }
     }
 
-    group_ = std::make_shared<GroupShips>(group_ships, leader);
 
 	SunPtr sun = std::make_shared<Sun>();
 	entitys_.insert(sun);

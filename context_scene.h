@@ -25,7 +25,7 @@ class ContextScene : public Renderable {
     private:
         void update_entitys_content();
 
-        GroupShipsPtr group_;
+        std::set<GroupShipsPtr> groups_;
 
         std::set<AvoidablePtr> avoidables_;
        

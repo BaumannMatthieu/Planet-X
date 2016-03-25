@@ -6,7 +6,7 @@
 #include "rectangle.h"
 
 uint8_t Quadtree::max_elements_ = 4;
-uint8_t Quadtree::max_deep_ = 4;
+uint8_t Quadtree::max_deep_ = 5;
 
 Quadtree::Quadtree(const QuadtreePtr parent, const uint8_t location) : parent_(parent), num_elements_(0) {
     if(parent_ == nullptr && location == NONE) {
