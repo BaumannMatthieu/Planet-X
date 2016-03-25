@@ -22,9 +22,10 @@ class Ship : public SpriteEntity,
         void take_damage(const uint8_t damage);
 
         virtual bool is_player() const;
-
         bool isShip() const;
         bool isDead() const;
+        const int16_t get_life() const;
+        
 
         virtual void cast_missile(const Vector2<float>& direction) const = 0;
     

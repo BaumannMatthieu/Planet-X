@@ -25,17 +25,6 @@ Blaster::Blaster(const Point& position) : EnemyShip(Rectangle(position, 30.f, 30
     for(uint8_t i = 0; i < n; i++) {
         attacking_displacement_->add_point(seek_pos + Point(300.f*std::cos(2*3.14f*i/n), 300.f*std::sin(2*3.14f*i/n)));
     }
-/*	
-    attacking_displacement_.add_point(seek_pos + Point(200.f, 0.f));	    
-    attacking_displacement_.add_point(seek_pos + Point(0.f, 200.f));	    
-    attacking_displacement_.add_point(seek_pos + Point(-200.f, 0.f));	    
-    attacking_displacement_.add_point(seek_pos + Point(0.f, -200.f));	    
-*/
-    /*
-    for(uint8_t i = 0; i < n; i++) {
-        attacking_displacement_.add_point(seek_pos + Point(200.f*std::cos(2*3.14f*i/n), 200.f*std::sin(2*3.14f*i/n)));
-    }
-    */
 
 	StatePtr wandering = std::make_shared<State>(State::WANDERING, [this] (const StatePtr current_state) {
 		/* wandering algorithme */

@@ -7,6 +7,7 @@
 #include "avoidable.h"
 #include "quadtree_handler.h"
 #include "group_ship.h"
+#include "life_ui.h"
 
 class ContextScene : public Renderable {
     public:
@@ -18,23 +19,20 @@ class ContextScene : public Renderable {
 
         void add_entity(EntityPtr entity);
         void delete_entity(EntityPtr entity);
-  //      void add_collisable(CollisablePtr collisable);
+        
         const std::set<AvoidablePtr>& get_obstacles() const;
 
     private:
         void update_entitys_content();
-    /*    
-        std::vector<RenderablePtr> entitys_;
-        std::vector<CollisablePtr> collisables_;
 
-        std::queue<RenderablePtr> add_entitys_;
-        std::queue<CollisablePtr> add_collisables_;
-*/
         GroupShipsPtr group_;
 
         std::set<AvoidablePtr> avoidables_;
+       
         std::set<EntityPtr> entitys_;
         std::queue<EntityPtr> add_entitys_;
+
+        std::set<LifeUiPtr> life_bars_ui_;
 
         QuadtreeHandler quadtree_handler_; 
 };

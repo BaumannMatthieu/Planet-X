@@ -59,3 +59,7 @@ bool Ship::isShip() const {
 bool Ship::isDead() const {
     return (life_ <= 0);
 }
+
+const int16_t Ship::get_life() const {
+    return life_;
+}

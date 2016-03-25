@@ -16,10 +16,12 @@ ContextScene::ContextScene() {
     
     player = std::make_shared<Player>();
     player->init_missile_handler();
-
+    
 	entitys_.insert(player);
     avoidables_.insert(player);
-    
+    life_bars_ui_.insert(std::make_shared<LifeUi>(player));    
+
+
     std::set<EnemyShipPtr> group_ships;
     EnemyShipPtr leader;
 
@@ -29,6 +31,7 @@ ContextScene::ContextScene() {
 
         entitys_.insert(blaster);
         avoidables_.insert(blaster);
+        life_bars_ui_.insert(std::make_shared<LifeUi>(blaster));    
 
         if(i >= 1 && i < 7) {
             group_ships.insert(blaster);
@@ -61,12 +64,20 @@ void ContextScene::update() {
     quadtree_handler_.update(entitys_);
 
     quadtree_handler_.detect_collisions();
+
+    for(auto& life_ui : life_bars_ui_) {
+        life_ui->update();
+    }
 }
 void ContextScene::draw(SDL_Renderer* renderer) {
     for(auto& entity : entitys_) {
         entity->draw(renderer);
     }
     quadtree_handler_.get_quadtree()->draw(renderer);
+    
+    for(auto& life_ui : life_bars_ui_) {
+        life_ui->draw(renderer);
+    }
 }
 
 const std::set<AvoidablePtr>& ContextScene::get_obstacles() const {
