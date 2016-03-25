@@ -1,8 +1,13 @@
+#include <iostream>
+#include <memory>
+
 #include "collisable.h"
 #include "shoot.h"
 #include "ship.h"
-#include <iostream>
-#include <memory>
+
+#include "context_scene.h"
+
+extern ContextScene scene_;
 
 bool Collisable::isShip() const {
     return false;
@@ -36,6 +41,8 @@ void Collisable::vertice_box_collision(const CollisablePtr first, const Collisab
         }
         if(Rectangle::intersection(shoot->get_position(), shoot->get_back_position(), ship->get_box())) {
             ship->take_damage(shoot->get_damage());        
+        
+            scene_.delete_entity(shoot);
         }
     }
 }

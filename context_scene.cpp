@@ -56,6 +56,7 @@ ContextScene::~ContextScene() {
 }
 
 void ContextScene::update() {
+
     update_entitys_content();
     for(auto& entity : entitys_) {
         entity->update();

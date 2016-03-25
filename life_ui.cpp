@@ -9,7 +9,7 @@ LifeUi::~LifeUi() {
 }
 
 void LifeUi::draw(SDL_Renderer* renderer) {
-    if(length_ == 0.f) {
+    if(length_ <= 0.f) {
         return;
     }
 
