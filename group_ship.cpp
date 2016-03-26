@@ -6,35 +6,22 @@
 extern PlayerPtr player;
 extern ContextScene scene_;
 
-GroupShips::GroupShips(EnemyShipPtr leader) : leader_(leader) {
+GroupShips::GroupShips(EnemyShipPtr leader, const FormationType formation) :
+	 leader_(leader),
+	 formation_(formation) {
 
 }
 
-const Point GroupShips::get_square_formation(const uint8_t id) const {
-    Point leader_pos = leader_->get_position();
-    Vector2<float> leader_direction = leader_->get_velocity();
-    if(leader_->is_current_state(State::ATTACKING)) {
-        leader_direction = player->get_position() - leader_->get_position();
-    }
-
-    leader_direction.normalize();
-
-    Vector2<float> leader_direction_t = leader_direction.get_normal();
-
-    Vector2<float> base_group = -leader_direction;
-    base_group = base_group*50.f;
-
-    return Point(leader_pos + base_group + leader_direction_t*50.f
-                       - leader_direction*(id/2)*75.f - leader_direction_t*(id%2)*100.f);
-
+GroupShips::~GroupShips() {
+    
 }
 
-GroupShips::GroupShips(const std::set<EnemyShipPtr> ships, const EnemyShipPtr leader) : ships_(ships), leader_(leader) {
-    unsigned int i = 0; 
-    for(auto& ship : ships_) {
-        std::set<StatePtr> states_follower_ship;
+void GroupShips::add_ship(EnemyShipPtr ship) {
+	std::set<StatePtr> states_follower_ship;
+        
+	const uint8_t id = ships_.size();
 
-        ship->set_position(get_square_formation(i));
+        ship->set_position(get_position_ship(id));
 
         StatePtr obstacle_avoidance = std::make_shared<State>(State::AVOIDANCE, [ship] (const StatePtr current_state) {
             Vector2<float> ship_velocity = ship->get_velocity();
@@ -54,8 +41,8 @@ GroupShips::GroupShips(const std::set<EnemyShipPtr> ships, const EnemyShipPtr le
             }            
         });
 
-        StatePtr follow_leader = std::make_shared<State>(State::FOLLOW_LEADER, [ship, this, i] (const StatePtr current_state) {
-            ship->add_force(ship->compute_arrive_force(ship->get_position(), get_square_formation(i)));
+        StatePtr follow_leader = std::make_shared<State>(State::FOLLOW_LEADER, [ship, this, id] (const StatePtr current_state) {
+            ship->add_force(ship->compute_arrive_force(ship->get_position(), get_position_ship(id)));
             if(leader_->is_current_state(State::ATTACKING)) {
                 ship->insert_state(current_state->get_next_state(State::ATTACKING));
             }
@@ -74,15 +61,6 @@ GroupShips::GroupShips(const std::set<EnemyShipPtr> ships, const EnemyShipPtr le
         states_follower_ship.insert(obstacle_avoidance);
 
         ship->set_current_states(states_follower_ship);
-        i++;
-    }
-}
-
-GroupShips::~GroupShips() {
-    
-}
-
-void GroupShips::add_ship(EnemyShipPtr ship) {
-    ships_.insert(ship);
+	ships_.insert(ship);
 }
 

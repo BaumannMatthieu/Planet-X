@@ -5,6 +5,7 @@
 #include "blaster_ship.h"
 #include "player.h"
 #include "sun.h"
+#include "square_group_ship.h"
 
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
@@ -21,10 +22,11 @@ ContextScene::ContextScene() {
     avoidables_.insert(player);
     life_bars_ui_.insert(std::make_shared<LifeUi>(player));    
 
-    std::set<EnemyShipPtr> group_ships;
     EnemyShipPtr leader;
 
-    for(unsigned int i = 0; i <= 10; i++) {
+	SquareGroupShipsPtr square_group = nullptr;
+
+    for(unsigned int i = 0; i < 5; i++) {
         BlasterPtr blaster = std::make_shared<Blaster>(Point(rand()%WINDOW_WIDTH, rand()%WINDOW_HEIGHT));
         blaster->init_missile_handler();
 
@@ -32,20 +34,15 @@ ContextScene::ContextScene() {
         avoidables_.insert(blaster);
         life_bars_ui_.insert(std::make_shared<LifeUi>(blaster));    
 
-        if(i%5 >= 1 && i%5 < 5) {
-            group_ships.insert(blaster);
-        }
-
-        if(i%5==0 && i > 0) {
-            groups_.insert(std::make_shared<GroupShips>(group_ships, leader));
-            group_ships.clear();
-        }
-        
-        if(i%5 == 0) {
-            leader = blaster;
-        }
+        if(i == 0) {
+            	leader = blaster;
+       		square_group = std::make_shared<SquareGroupShips>(leader);
+	} else {
+        	square_group->add_ship(blaster);
+	}
     }
 
+            	groups_.insert(square_group);
 
 	SunPtr sun = std::make_shared<Sun>();
 	entitys_.insert(sun);

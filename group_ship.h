@@ -7,18 +7,23 @@
 
 class GroupShips {
     public:
-        GroupShips(EnemyShipPtr leader);
-        GroupShips(const std::set<EnemyShipPtr> ships, const EnemyShipPtr leader);
+	typedef enum {
+		SQUARE, 
+		TRIANGLE
+	} FormationType;
+
+        GroupShips(EnemyShipPtr leader, const FormationType formation);
         virtual ~GroupShips();
 
         void add_ship(EnemyShipPtr ship);
     
-    private:
-        const Point get_square_formation(const uint8_t id) const;
+        virtual const Point get_position_ship(const uint8_t id) const = 0;
     
-    private:
+    protected:
         std::set<EnemyShipPtr> ships_;
         EnemyShipPtr leader_;
+
+	FormationType formation_;
 };
 
 typedef std::shared_ptr<GroupShips> GroupShipsPtr;
