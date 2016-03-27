@@ -10,10 +10,10 @@ class Blaster : public EnemyShip {
 		Blaster(const Point& position);
 		virtual ~Blaster();
         
-        void cast_missile(const Vector2<float>& direction) const;
+        	void cast_missile(const Vector2<float>& direction) const;
 
-    private:
-        CenteredPathPtr attacking_displacement_;
+	private:
+        	CenteredPathPtr attacking_displacement_;
 };
 
 typedef std::shared_ptr<Blaster> BlasterPtr;

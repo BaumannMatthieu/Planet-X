@@ -7,13 +7,13 @@
 
 #include "context_scene.h"
 
-extern ContextScene scene_;
+extern ContextScene scene;
 
 bool Collisable::isShip() const {
     return false;
 }
 
-bool Collisable::isShoot() const {
+bool Collisable::is_missile() const {
     return false;
 }
 
@@ -26,11 +26,11 @@ bool Collisable::isBox() const {
 }
 
 void Collisable::vertice_box_collision(const CollisablePtr first, const CollisablePtr second) {
-    if(first->isShoot() && second->isShip()) {
-        ShootPtr shoot = std::dynamic_pointer_cast<Shoot>(first);
+    if(first->is_missile() && second->isShip()) {
+        MissilePtr missile = std::dynamic_pointer_cast<Missile>(first);
         ShipPtr ship = std::dynamic_pointer_cast<Ship>(second);
 
-        if(auto caster = shoot->get_caster().lock()) {
+        if(auto caster = missile->get_caster().lock()) {
             if(!caster->is_player() && !ship->is_player()) {
                 return;
             }
@@ -39,10 +39,9 @@ void Collisable::vertice_box_collision(const CollisablePtr first, const Collisab
                 return;
             }
         }
-        if(Rectangle::intersection(shoot->get_position(), shoot->get_back_position(), ship->get_box())) {
-            ship->take_damage(shoot->get_damage());        
-        
-            scene_.delete_entity(shoot);
+        if(missile->compute(ship->get_box())) {
+            ship->take_damage(missile->get_damage());        
+            scene.delete_entity(missile);
         }
     }
 }

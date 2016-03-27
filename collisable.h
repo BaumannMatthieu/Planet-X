@@ -14,7 +14,7 @@ class Collisable {
         static void vertice_box_collision(const CollisablePtr first, const CollisablePtr second);
 
         virtual bool isShip() const;
-        virtual bool isShoot() const;
+        virtual bool is_missile() const;
 
         virtual bool isBox() const;
         virtual bool isVertice() const;

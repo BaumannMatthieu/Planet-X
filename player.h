@@ -19,6 +19,10 @@ class Player : public Ship,
         bool is_player() const;
 
         void cast_missile(const Vector2<float>& direction) const;
+	void cast_laser(const Vector2<float>& direction) const;
+
+	const Vector2<float>& get_direction() const;
+
     private:
         bool stopped_;
         float k_;

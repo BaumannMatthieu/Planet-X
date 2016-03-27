@@ -21,12 +21,10 @@ class Shoot : public Missile,
         bool compute(const Rectangle& rect) const;
 
         void move();
-
-        bool isShoot() const;
         
         const Point& get_position() const;
-        const Point& get_back_position() const;
-        
+/*        const Point& get_back_position() const;
+  */      
         bool isVertice() const;
     
     private:
@@ -35,8 +33,8 @@ class Shoot : public Missile,
         float speed_;
         float length_;
 
-        Vertice front_;
-        Vertice back_;
+        Vertice position_;
+        Vertice end_position_;
 };
 
 typedef std::shared_ptr<Shoot> ShootPtr;

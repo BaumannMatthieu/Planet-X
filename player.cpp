@@ -3,6 +3,7 @@
 #include "event_data.h"
 
 #include "shoot.h"
+#include "laser_beam.h"
 
 extern EventHandler event_handler; 
 
@@ -86,11 +87,32 @@ void Player::register_events() {
             cast_missile(focus_ - box_.center_mass_);
         }
 	});
+
+    event_handler.add(SDL_MOUSEBUTTONDOWN, [this] (const EventData& event_data) {
+        const Uint32 mouse_bitmask = event_data.get_mouse_bitmask();
+        if(mouse_bitmask & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
+            cast_laser(focus_ - box_.center_mass_);
+        }
+    });
+
+    event_handler.add(SDL_MOUSEBUTTONUP, [this] (const EventData& event_data) {
+        const Uint32 mouse_bitmask = event_data.get_mouse_bitmask();
+        if(mouse_bitmask & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
+        	missile_handler->stop_laser();
+	}
+    });
 }
 
+const Vector2<float>& Player::get_direction() const {
+	return (focus_ - box_.center_mass_);
+}
 
 void Player::cast_missile(const Vector2<float>& direction) const {
-    missile_handler->cast_missile(box_.center_mass_, direction, 20.f); 
+	missile_handler->cast_missile(box_.center_mass_, direction, 20.f); 
+}
+
+void Player::cast_laser(const Vector2<float>& direction) const {
+	missile_handler->cast_laser(box_.center_mass_, direction); 
 }
 
 bool Player::is_player() const {

@@ -3,7 +3,7 @@
 #define FRAME_PER_SECOND 60
 
 EventHandler event_handler;
-ContextScene scene_;
+ContextScene scene;
 
 Game::Game() : running_(true), time_per_frame_(1000/FRAME_PER_SECOND) {
 
@@ -28,6 +28,7 @@ Game::Game() : running_(true), time_per_frame_(1000/FRAME_PER_SECOND) {
 	    exit(EXIT_FAILURE);
 	}
 	register_events();
+
 	past_time_ = SDL_GetTicks();
 }
 
@@ -54,11 +55,12 @@ void Game::run() {
 
 void Game::register_events() {
 	event_handler.add(SDL_KEYDOWN, [this] (const EventData& event_data) {
-		const Uint8* state = event_data.get_key_state();
+	const Uint8* state = event_data.get_key_state();
         if(state[SDL_SCANCODE_ESCAPE]) {
 			running_ = false;
 		}
 	});
+
 /*
 	event_handler.add(SDL_QUIT, [this] (const SDL_Event& event) {
 		if(event.type == SDL_QUIT) {
@@ -77,11 +79,11 @@ void Game::get_events() {
 
 void Game::update() {
 	/** run world update, enemys, environments, particules ... */
-	scene_.update();
+	scene.update();
 }
 
 void Game::render() {
 	SDL_RenderClear(renderer_);
-	scene_.draw(renderer_);
+	scene.draw(renderer_);
    	SDL_RenderPresent(renderer_);
 }

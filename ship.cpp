@@ -6,7 +6,7 @@
 
 #include "context_scene.h"
 
-extern ContextScene scene_;
+extern ContextScene scene;
 
 Ship::Ship(const Rectangle& box) : SpriteEntity(box), life_(100) {
 	mass_ = 7;
@@ -22,7 +22,7 @@ Ship::~Ship() {
 
 void Ship::update() {
     if(isDead()) {
-        scene_.delete_entity(shared_from_this());
+        scene.delete_entity(shared_from_this());
     }
 
     Math::truncate(force_, max_force_);

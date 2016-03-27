@@ -26,7 +26,7 @@ class Game : public EventRegistrable {
 		SDL_Window* window_;
 		SDL_Renderer* renderer_;
 
-        EventData event_data_;
+        	EventData event_data_;
 
 		bool running_;
 		Uint32 time_per_frame_;

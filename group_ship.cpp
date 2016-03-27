@@ -4,7 +4,7 @@
 #include "scriptable.h"
 
 extern PlayerPtr player;
-extern ContextScene scene_;
+extern ContextScene scene;
 
 GroupShips::GroupShips(EnemyShipPtr leader, const FormationType formation) :
 	 leader_(leader),
@@ -30,7 +30,7 @@ void GroupShips::add_ship(EnemyShipPtr ship) {
             Point ahead_half = ship->get_position() + (ship_velocity/ship_velocity.get_norme())*dynamic_length*25.5f;
 
             AvoidablePtr obstacle = Avoidable::get_most_threatening_obstacle(ship, ship->get_position(),
-            ahead, ahead_half, scene_.get_obstacles());
+            ahead, ahead_half, scene.get_obstacles());
 
             if(obstacle != nullptr) {
                 Vector2<float> avoidance_force(ahead - obstacle->get_circle().get_pos());

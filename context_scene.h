@@ -1,6 +1,7 @@
 #ifndef __CONTEXT_SCENE_H__
 #define __CONTEXT_SCENE_H__
 
+#include <memory>
 #include <queue>
 
 #include "entity.h"
@@ -36,5 +37,7 @@ class ContextScene : public Renderable {
 
         QuadtreeHandler quadtree_handler_; 
 };
+
+typedef std::shared_ptr<ContextScene> ContextScenePtr;
 
 #endif 

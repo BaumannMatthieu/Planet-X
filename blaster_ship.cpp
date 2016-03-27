@@ -8,7 +8,7 @@
 #include "context_scene.h"
 
 extern PlayerPtr player;
-extern ContextScene scene_;
+extern ContextScene scene;
 
 Blaster::Blaster(const Point& position) : EnemyShip(Rectangle(position, 30.f, 30.f)) {
 	mass_ = 7;
@@ -44,7 +44,7 @@ Blaster::Blaster(const Point& position) : EnemyShip(Rectangle(position, 30.f, 30
         Point ahead_half = box_.center_mass_ + (velocity_/velocity_.get_norme())*dynamic_length*25.5f;
 
         AvoidablePtr obstacle = Avoidable::get_most_threatening_obstacle(shared_from_this(), box_.center_mass_,
-        ahead, ahead_half, scene_.get_obstacles());
+        ahead, ahead_half, scene.get_obstacles());
 
         if(obstacle != nullptr) {
             Vector2<float> avoidance_force(ahead - obstacle->get_circle().get_pos());

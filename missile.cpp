@@ -24,3 +24,7 @@ const uint8_t Missile::get_damage() const {
 std::weak_ptr<Ship> Missile::get_caster() const {
     return caster_;
 }
+
+bool Missile::is_missile() const {
+	return true;
+}
