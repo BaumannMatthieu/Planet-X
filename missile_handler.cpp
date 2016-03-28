@@ -30,13 +30,12 @@ void MissileHandler::cast_laser(const Point& pos, const Vector2<float>& directio
         laser_ = std::make_shared<LaserBeam>(caster_, pos, direction, color_);  
         scene.add_entity(laser_);
 	
-	laser_launching_ = true;
+	    laser_launching_ = true;
     }
 }
 
 void MissileHandler::stop_laser() {
 	if(laser_launching_) {
-		std::cout << "kjsdfk" << std::endl;
 		scene.delete_entity(laser_);
 		laser_launching_ = false;
 	}

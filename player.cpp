@@ -97,9 +97,9 @@ void Player::register_events() {
 
     event_handler.add(SDL_MOUSEBUTTONUP, [this] (const EventData& event_data) {
         const Uint32 mouse_bitmask = event_data.get_mouse_bitmask();
-        if(mouse_bitmask & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
-        	missile_handler->stop_laser();
-	}
+        if(!(mouse_bitmask & SDL_BUTTON(SDL_BUTTON_RIGHT))) {
+            missile_handler->stop_laser();
+	    }
     });
 }
 

@@ -5,7 +5,7 @@
 
 LaserBeam::LaserBeam(const std::weak_ptr<Ship> caster, const Point& position, const Vector2<float>& direction, const SDL_Color& color) : Missile(caster, 20, color),
 				 direction_(direction),
-                                 length_(400.f),
+                                 length_(600.f),
                                  position_(position),
 				 end_position_(position) {
 	velocity_ = Vector2<float>(0.f, 0.f);
