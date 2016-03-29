@@ -4,7 +4,6 @@
 #include <memory>
 #include "sprite_entity.h"
 #include "rectangle.h"
-#include "movable.h"
 
 class Sun : public SpriteEntity {
 	public:

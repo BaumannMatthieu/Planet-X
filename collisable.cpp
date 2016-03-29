@@ -4,6 +4,7 @@
 #include "collisable.h"
 #include "shoot.h"
 #include "ship.h"
+#include "asteroid.h"
 
 #include "context_scene.h"
 
@@ -14,6 +15,10 @@ bool Collisable::isShip() const {
 }
 
 bool Collisable::is_missile() const {
+    return false;
+}
+
+bool Collisable::is_asteroid() const {
     return false;
 }
 
@@ -42,6 +47,19 @@ void Collisable::vertice_box_collision(const CollisablePtr first, const Collisab
 
         if(missile->compute(ship->get_box())) {
             ship->take_damage(missile);
+        }
+    }
+}
+
+void Collisable::box_box_collision(const CollisablePtr first, const CollisablePtr second) {
+    if(first->is_asteroid() && second->is_asteroid()) {
+        AsteroidPtr asteroid1 = std::dynamic_pointer_cast<Asteroid>(first);
+        AsteroidPtr asteroid2 = std::dynamic_pointer_cast<Asteroid>(second);
+        
+        if(asteroid1->compute(asteroid2->get_box())) {
+            Vector2<float> d = asteroid1->get_position() - asteroid2->get_position();
+            asteroid1->add_force(d);
+            asteroid2->add_force(-d);
         }
     }
 }

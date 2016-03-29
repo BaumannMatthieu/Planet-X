@@ -5,6 +5,7 @@
 #include "blaster_ship.h"
 #include "player.h"
 #include "sun.h"
+#include "asteroid.h"
 #include "square_group_ship.h"
 
 #define WINDOW_WIDTH 1920
@@ -37,16 +38,23 @@ ContextScene::ContextScene() {
         if(i == 0) {
             	leader = blaster;
        		square_group = std::make_shared<SquareGroupShips>(leader);
-	} else {
-        	square_group->add_ship(blaster);
-	}
+        } else {
+                square_group->add_ship(blaster);
+        }
     }
 
-            	groups_.insert(square_group);
+    groups_.insert(square_group);
 
 	SunPtr sun = std::make_shared<Sun>();
 	entitys_.insert(sun);
     avoidables_.insert(sun);
+
+
+    for(unsigned int i = 0; i < 30; i++) {
+	    AsteroidPtr asteroid = std::make_shared<Asteroid>();
+	    entitys_.insert(asteroid);
+        avoidables_.insert(asteroid);
+    }    
     
     for(auto& collisable : entitys_) {
         quadtree_handler_.insert(collisable);

@@ -53,6 +53,14 @@ void QuadtreeHandler::detect_collisions() const {
                     }
                 }
             }
+        } else if(first->isBox()) {
+             for(auto& quadtree : collision.second) {
+                for(auto& second : quadtree->get_elements(first)) {
+                    if(second->isBox()) {
+                        Collisable::box_box_collision(first, second); 
+                    }
+                }
+            }
         }
     }
 }

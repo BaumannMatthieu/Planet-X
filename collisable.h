@@ -12,9 +12,11 @@ class Collisable {
         virtual bool compute(const Rectangle& rect) const = 0;
 
         static void vertice_box_collision(const CollisablePtr first, const CollisablePtr second);
+        static void box_box_collision(const CollisablePtr first, const CollisablePtr second);
 
         virtual bool isShip() const;
         virtual bool is_missile() const;
+        virtual bool is_asteroid() const;
 
         virtual bool isBox() const;
         virtual bool isVertice() const;
