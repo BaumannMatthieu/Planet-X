@@ -5,6 +5,7 @@
 #include "sprite_entity.h"
 #include "rectangle.h"
 #include "movable.h"
+#include "missile.h"
 #include "missile_handler.h"
 
 class Ship : public SpriteEntity,
@@ -19,7 +20,7 @@ class Ship : public SpriteEntity,
 		void move();
 		virtual void update();
         
-        void take_damage(const uint8_t damage);
+        void take_damage(const MissilePtr missile);
 
         virtual bool is_player() const;
         bool isShip() const;

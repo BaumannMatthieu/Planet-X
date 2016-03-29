@@ -3,7 +3,7 @@
 #include "ship.h"
 #include "player.h"
 
-LaserBeam::LaserBeam(const std::weak_ptr<Ship> caster, const Point& position, const Vector2<float>& direction, const SDL_Color& color) : Missile(caster, 20, color),
+LaserBeam::LaserBeam(const std::weak_ptr<Ship> caster, const Point& position, const Vector2<float>& direction, const SDL_Color& color) : Missile(caster, 3, color),
 				 direction_(direction),
                                  length_(600.f),
                                  position_(position),
@@ -26,7 +26,7 @@ void LaserBeam::draw(SDL_Renderer* renderer) {
 void LaserBeam::update() {
 	if(auto caster = caster_.lock()) {
 		if(caster->is_player()) {
-        		PlayerPtr player = std::dynamic_pointer_cast<Player>(caster);
+       		PlayerPtr player = std::dynamic_pointer_cast<Player>(caster);
 			
 			direction_ = player->get_direction();
 			direction_.normalize();	
@@ -54,4 +54,8 @@ const Point& LaserBeam::get_position() const {
 
 bool LaserBeam::isVertice() const {
 	return true;
+}
+
+bool LaserBeam::is_laser() const {
+    return true;
 }

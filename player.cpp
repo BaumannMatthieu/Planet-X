@@ -92,6 +92,10 @@ void Player::register_events() {
         const Uint32 mouse_bitmask = event_data.get_mouse_bitmask();
         if(mouse_bitmask & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
             cast_laser(focus_ - box_.center_mass_);
+
+            if(missile_handler->laser_out_of_power()) {
+                missile_handler->stop_laser();
+            }
         }
     });
 

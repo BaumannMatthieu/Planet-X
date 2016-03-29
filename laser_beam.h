@@ -24,8 +24,11 @@ class LaserBeam : public Missile,
 
         const Point& get_position() const;
 	const Point& get_focus() const;       
+
  
         bool isVertice() const;
+
+        bool is_laser() const;
     
     private:
         Vector2<float> direction_;

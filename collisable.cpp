@@ -39,9 +39,9 @@ void Collisable::vertice_box_collision(const CollisablePtr first, const Collisab
                 return;
             }
         }
+
         if(missile->compute(ship->get_box())) {
-            ship->take_damage(missile->get_damage());        
-            scene.delete_entity(missile);
+            ship->take_damage(missile);
         }
     }
 }

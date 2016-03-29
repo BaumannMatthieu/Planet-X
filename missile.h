@@ -20,8 +20,11 @@ class Missile : public Entity {
         std::weak_ptr<Ship> get_caster() const;
         const uint8_t get_damage() const;
 
-	bool is_missile() const;
-    
+    	bool is_missile() const;
+        
+        virtual bool is_laser() const;    
+
+
     protected:
         std::weak_ptr<Ship> caster_; 
         uint8_t degats_;

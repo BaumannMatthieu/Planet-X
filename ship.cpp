@@ -37,8 +37,18 @@ void Ship::update() {
     force_ = Vector2<float>(0.f, 0.f);
 }
 
-void Ship::take_damage(const uint8_t damage) {
-    life_ -= damage; 
+void Ship::take_damage(const MissilePtr missile) {
+    if(missile->is_laser()) {
+        if(!missile_handler->laser_damage_time()) { 
+            return;
+        }
+    }
+
+    life_ -= missile->get_damage(); 
+
+    if(!missile->is_laser()) {
+        scene.delete_entity(missile);
+    }
 }
 
 void Ship::move() {
