@@ -58,8 +58,8 @@ void Collisable::box_box_collision(const CollisablePtr first, const CollisablePt
         
         if(asteroid1->compute(asteroid2->get_box())) {
             Vector2<float> d = asteroid1->get_position() - asteroid2->get_position();
-            asteroid1->add_force(d);
-            asteroid2->add_force(-d);
+            asteroid1->add_force(d*0.1f);
+            asteroid2->add_force(-d*0.1f);
         }
     }
 }

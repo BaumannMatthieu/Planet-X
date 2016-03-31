@@ -7,10 +7,10 @@
 
 class GroupShips {
     public:
-	typedef enum {
-		SQUARE, 
-		TRIANGLE
-	} FormationType;
+	    typedef enum {
+		    SQUARE, 
+		    TRIANGLE
+	    } FormationType;
 
         GroupShips(EnemyShipPtr leader, const FormationType formation);
         virtual ~GroupShips();
@@ -23,7 +23,7 @@ class GroupShips {
         std::set<EnemyShipPtr> ships_;
         EnemyShipPtr leader_;
 
-	FormationType formation_;
+	    FormationType formation_;
 };
 
 typedef std::shared_ptr<GroupShips> GroupShipsPtr;

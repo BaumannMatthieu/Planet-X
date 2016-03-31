@@ -8,6 +8,7 @@
 #include "avoidable.h"
 #include "quadtree_handler.h"
 #include "group_ship.h"
+#include "group_asteroid.h"
 #include "life_ui.h"
 
 class ContextScene : public Renderable {
@@ -27,6 +28,7 @@ class ContextScene : public Renderable {
         void update_entitys_content();
 
         std::set<GroupShipsPtr> groups_;
+        GroupAsteroids group_asteroids_;
 
         std::set<AvoidablePtr> avoidables_;
        

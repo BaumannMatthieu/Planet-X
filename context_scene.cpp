@@ -7,6 +7,7 @@
 #include "sun.h"
 #include "asteroid.h"
 #include "square_group_ship.h"
+#include "group_asteroid.h"
 
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
@@ -50,10 +51,12 @@ ContextScene::ContextScene() {
     avoidables_.insert(sun);
 
 
-    for(unsigned int i = 0; i < 30; i++) {
+    for(unsigned int i = 0; i < 100; i++) {
 	    AsteroidPtr asteroid = std::make_shared<Asteroid>();
 	    entitys_.insert(asteroid);
         avoidables_.insert(asteroid);
+        
+        group_asteroids_.add_asteroid(asteroid);
     }    
     
     for(auto& collisable : entitys_) {
@@ -68,6 +71,8 @@ ContextScene::~ContextScene() {
 void ContextScene::update() {
 
     update_entitys_content();
+    group_asteroids_.update();
+
     for(auto& entity : entitys_) {
         entity->update();
     }

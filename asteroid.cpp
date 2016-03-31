@@ -3,7 +3,7 @@
 #include "rectangle.h"
 #include <iostream>
 
-Asteroid::Asteroid() : SpriteEntity(Rectangle(Vector2<float>(std::rand()%WINDOW_WIDTH, std::rand()%WINDOW_HEIGHT), 50.f, 50.f)) {
+Asteroid::Asteroid() : SpriteEntity(Rectangle(Vector2<float>(std::rand()%WINDOW_WIDTH, std::rand()%WINDOW_HEIGHT), 40.f, 40.f)) {
 	mass_ = 7;
     max_velocity_ = 1.0f;
     min_velocity_ = 0.1f;
