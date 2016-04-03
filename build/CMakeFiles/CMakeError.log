@@ -1,0 +1,53 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/matthieu/Programmation/space-game/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec4065880338/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec4065880338.dir/build.make CMakeFiles/cmTryCompileExec4065880338.dir/build
+make[1]: entrant dans le répertoire « /home/matthieu/Programmation/space-game/build/CMakeFiles/CMakeTmp »
+/usr/bin/cmake -E cmake_progress_report /home/matthieu/Programmation/space-game/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec4065880338.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec4065880338.dir/CheckSymbolExists.c.o   -c /home/matthieu/Programmation/space-game/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec4065880338
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4065880338.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec4065880338.dir/CheckSymbolExists.c.o  -o cmTryCompileExec4065880338 -rdynamic 
+CMakeFiles/cmTryCompileExec4065880338.dir/CheckSymbolExists.c.o: dans la fonction « main »:
+CheckSymbolExists.c:(.text+0x16): référence indéfinie vers « pthread_create »
+collect2: error: ld returned 1 exit status
+make[1]: *** [cmTryCompileExec4065880338] Erreur 1
+make[1]: quittant le répertoire « /home/matthieu/Programmation/space-game/build/CMakeFiles/CMakeTmp »
+make: *** [cmTryCompileExec4065880338/fast] Erreur 2
+
+File /home/matthieu/Programmation/space-game/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/matthieu/Programmation/space-game/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec3978460725/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3978460725.dir/build.make CMakeFiles/cmTryCompileExec3978460725.dir/build
+make[1]: entrant dans le répertoire « /home/matthieu/Programmation/space-game/build/CMakeFiles/CMakeTmp »
+/usr/bin/cmake -E cmake_progress_report /home/matthieu/Programmation/space-game/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3978460725.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec3978460725.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.2/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec3978460725
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3978460725.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec3978460725.dir/CheckFunctionExists.c.o  -o cmTryCompileExec3978460725 -rdynamic -lpthreads 
+/usr/bin/ld: ne peut trouver -lpthreads
+collect2: error: ld returned 1 exit status
+make[1]: *** [cmTryCompileExec3978460725] Erreur 1
+make[1]: quittant le répertoire « /home/matthieu/Programmation/space-game/build/CMakeFiles/CMakeTmp »
+make: *** [cmTryCompileExec3978460725/fast] Erreur 2
+
+
